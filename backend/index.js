@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 const adminRoutes = require("./routes/adminRoutes");
 const commentsRoutes = require("./routes/commentsRoutes");
 const mlRoutes = require("./routes/mlRoutes");
+const amendRoutes = require("./routes/amendRoutes");
 
 // CORS
 app.use(cors({
@@ -31,6 +32,9 @@ app.use("/api/comments",commentsRoutes)
 
 //ML routes
 app.use("/api/ml",mlRoutes)
+
+//Amendment Routes
+app.use("/api/amend",amendRoutes)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
