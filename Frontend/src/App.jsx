@@ -5,6 +5,7 @@ import Amendments from "./Amendments";
 import CommentsPage from "./CommentsPage";
 import AmendmentReport from "./AmendmentReport";
 import SettingsPage from "./SettingsPage";
+import PopUp from "./components/PopUp";
 
 function App() {
   // Temporary auth state and later we’ll replace this with real backend JWT/session logic
@@ -60,6 +61,7 @@ function App() {
             )
           }
         />
+        <Route path="/amendments/comments/report/popup" element={<PopUp />} />
 
         {/* Add more routes here */}
       </Routes>
