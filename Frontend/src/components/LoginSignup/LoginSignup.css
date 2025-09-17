@@ -95,16 +95,15 @@ body, html, #root {
   border-radius: 6px;
   font-size: 14px;
 }
-
-
 .signup-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  justify-items: center;   /* centers each input horizontally */
 }
-
 .signup-grid input {
-  margin: 0;
+  width: 100%;             /* makes them stretch nicely */
+  max-width: 230px;        /* same as your .reg */
 }
 
 .submit-btn {
@@ -160,4 +159,14 @@ input{
 }
 #pic{
   width:230px;
+}
+
+.glass-card {
+  background: rgba(187, 213, 250, 0.15);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  padding: 30px;
 }
