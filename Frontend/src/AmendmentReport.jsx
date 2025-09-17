@@ -456,6 +456,8 @@ export default function AmendmentReport() {
   const reportRef = useRef();
   const location = useLocation();
   const csvFile = location.state?.csvFile;
+  const Id = localStorage.getItem("aId") || "Amend126";
+  console.log("The Id is ", Id);
 
   const [mlResult, setMlResult] = useState(null); // null means no data yet
   const [reportLoading, setReportLoading] = useState(false);
@@ -469,6 +471,7 @@ export default function AmendmentReport() {
 
       const formData = new FormData();
       formData.append("file", csvFile);
+      formData.append("amendmentId", Id);
 
       try {
         const res = await fetch("http://localhost:3000/api/ml/analyze", {
@@ -555,6 +558,45 @@ export default function AmendmentReport() {
       console.error("PDF download failed:", error);
     }
   };
+
+  useEffect(() => {
+    if (!mlResult) return;
+
+    const savedKey = `saved_${Id}`;
+    if (localStorage.getItem(savedKey)) {
+      console.log(`⚠️ Already saved ML result for ${Id}`);
+      return;
+    }
+
+    const saveResultToDB = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/amend/${Id}/saveAmends`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(mlResult),
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error(`Server responded with ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log("✅ ML Result saved:", data);
+
+        // Mark as saved
+        localStorage.setItem(savedKey, "true");
+      } catch (err) {
+        console.error("❌ Failed to save ML result:", err);
+      }
+    };
+
+    saveResultToDB();
+  }, [mlResult, Id]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={reportRef}>
@@ -749,7 +791,10 @@ export default function AmendmentReport() {
                         Positive Cloud
                       </h2>
                       <img
-                        src={`http://localhost:5000${mlResult.wordclouds.positive?.url}`}
+                        src={`http://localhost:5000${mlResult.wordclouds.positive?.url.replace(
+                          "#",
+                          "%23"
+                        )}`}
                         alt="Positive Word Cloud"
                       />
                     </div>
@@ -758,8 +803,11 @@ export default function AmendmentReport() {
                         Negative Cloud
                       </h2>
                       <img
-                        src={`http://localhost:5000${mlResult.wordclouds.negative?.url}`}
-                        alt="Negative Word Cloud"
+                        src={`http://localhost:5000${mlResult.wordclouds.negative?.url.replace(
+                          "#",
+                          "%23"
+                        )}`}
+                        alt="Positive Word Cloud"
                       />
                     </div>
                     <div className="my-4">
@@ -767,8 +815,11 @@ export default function AmendmentReport() {
                         Neutral Cloud
                       </h2>
                       <img
-                        src={`http://localhost:5000${mlResult.wordclouds.neutral?.url}`}
-                        alt="Neutral Word Cloud"
+                        src={`http://localhost:5000${mlResult.wordclouds.neutral?.url.replace(
+                          "#",
+                          "%23"
+                        )}`}
+                        alt="Positive Word Cloud"
                       />
                     </div>
                   </>

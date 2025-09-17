@@ -2,6 +2,7 @@ const connectDB = require("../database");
 const bcrypt = require("bcrypt");
 const Admin = require("../Schemas/adminSchema");
 const jwt = require("jsonwebtoken");
+const Amndement = require("../Schemas/report");
 
 // ✅ Register Admin
 const register = async (req, res) => {
@@ -92,6 +93,7 @@ const login = async (req, res) => {
     res.status(500).json({ error: "error occurred", detail: e.message });
   }
 };
+
 
 // ✅ Export correctly
 module.exports = { register, login };
