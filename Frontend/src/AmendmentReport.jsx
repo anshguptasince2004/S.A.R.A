@@ -43,7 +43,7 @@ export default function AmendmentReport() {
   const [reportLoading, setReportLoading] = useState(false);
   const [error, setError] = useState(null);
   const [openPopup, setOpenPopup] = useState(null); // "positive" | "negative" | "neutral" | null
-  const [csvData,setCsvData] = useState({});
+  const [csvData, setCsvData] = useState({});
 
   useEffect(() => {
     const sendCsvToML = async () => {
@@ -76,31 +76,31 @@ export default function AmendmentReport() {
 
           setMlResult(data);
           console.log("The ML reports are ", data);
-           // ✅ Now fetch the CSV file and parse it
-        if (data.output_csv) {
-          try {
-            const csvRes = await fetch(`http://localhost:5000${data.output_csv}`);
-            if (!csvRes.ok) throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
-            const csvText = await csvRes.text();
+          // ✅ Now fetch the CSV file and parse it
+          if (data.output_csv) {
+            try {
+              const csvRes = await fetch(`http://localhost:5000${data.output_csv}`);
+              if (!csvRes.ok) throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
+              const csvText = await csvRes.text();
 
-            // Convert CSV text to JSON (simple split by lines + commas)
-            const [headerLine, ...rows] = csvText.split("\n");
-            const headers = headerLine.split(",");
-            const jsonData = rows.map((row) => {
-              const values = row.split(",");
-              return headers.reduce((acc, header, idx) => {
-                acc[header] = values[idx];
-                return acc;
-              }, {});
-            });
+              // Convert CSV text to JSON (simple split by lines + commas)
+              const [headerLine, ...rows] = csvText.split("\n");
+              const headers = headerLine.split(",");
+              const jsonData = rows.map((row) => {
+                const values = row.split(",");
+                return headers.reduce((acc, header, idx) => {
+                  acc[header] = values[idx];
+                  return acc;
+                }, {});
+              });
 
-            setCsvData(jsonData);
-            console.log("CSV data parsed as JSON:", jsonData);
-          } catch (csvErr) {
-            console.error("Failed to parse CSV:", csvErr);
+              setCsvData(jsonData);
+              console.log("CSV data parsed as JSON:", jsonData);
+            } catch (csvErr) {
+              console.error("Failed to parse CSV:", csvErr);
+            }
           }
-        }
-      
+
         } else {
           const text = await res.text();
           throw new Error("Flask server did not return JSON: " + text);
@@ -141,32 +141,48 @@ export default function AmendmentReport() {
     : [];
 
   const downloadPDF = async () => {
-    if (!reportRef.current) {
-      console.error("reportRef is null, nothing to capture");
-      return;
-    }
-
     try {
-      console.log("Capturing report...");
-      const dataUrl = await htmlToImage.toPng(reportRef.current, {
-        cacheBust: true,
-        backgroundColor: "white",
+      if (!mlResult) {
+        console.error("No ML result available for PDF");
+        return;
+      }
+
+      const payload = {
+        amendmentId: Id,
+        amendmentTitle: "Amendment 3 Analysis", // you can make this dynamic
+        counts: mlResult.sentiment_counts,
+        percentages: {
+          positive: Pp,
+          negative: Np,
+          neutral: Nup,
+        },
+        keywords: ["economy", "jobs", "growth"], // ⚡ replace with actual frequent words
+        summaries: mlResult.summaries,
+      };
+
+      const res = await fetch("http://localhost:5000/generate-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      console.log("Image captured, generating PDF...");
+      if (!res.ok) throw new Error("Failed to generate PDF");
 
-      const pdf = new jsPDF("l", "mm", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const imgProps = pdf.getImageProperties(dataUrl);
-      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      // Download the PDF
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${Id}_AmendmentReport.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
 
-      pdf.addImage(dataUrl, "PNG", 0, 0, pdfWidth, imgHeight);
-      pdf.save("AmendmentReport.pdf");
-      console.log("PDF saved in landscape mode!");
-    } catch (error) {
-      console.error("PDF download failed:", error);
+      console.log("✅ PDF downloaded successfully!");
+    } catch (err) {
+      console.error("PDF download error:", err);
     }
   };
+
 
   useEffect(() => {
     if (!mlResult) return;
@@ -307,7 +323,7 @@ export default function AmendmentReport() {
                         </span>
                       </li>
                       <li>
-                        <span     
+                        <span
                           className="inline-block w-3 h-3 rounded-full mr-2"
                           style={{ background: COLORS[1] }}
                         ></span>

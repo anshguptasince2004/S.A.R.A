@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, send_file
 import os
 import shutil
 from werkzeug.utils import secure_filename
 from inference import run_inference
 import base64
 import pandas as pd
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from pdf_generator import generate_report_pdf
 
 # ---------------- Configuration ----------------
 UPLOAD_FOLDER = "uploads"
@@ -24,6 +25,28 @@ app.config["OUTPUT_FOLDER"] = OUTPUT_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
+@app.route("/generate-pdf", methods=["POST"])
+def generate_pdf():
+    try:
+        data = request.json
+        amendment_id = data.get("amendmentId")
+        amendment_title = data.get("amendmentTitle", "Untitled Amendment")
+        counts = data.get("counts", {})
+        percentages = data.get("percentages", {})
+        keywords = data.get("keywords", [])
+        summaries = data.get("summaries", {})
+
+        file_path = generate_report_pdf(amendment_id, amendment_title, counts, percentages, keywords, summaries)
+
+        # --- Optional: store PDF to DB ---
+        # with open(file_path, "rb") as f:
+        #     pdf_bytes = f.read()
+        #     # save pdf_bytes in MongoDB or another DB
+
+        return send_file(file_path, as_attachment=True)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # ---------------- Utility Functions ----------------
 def allowed_file(filename):
