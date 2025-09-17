@@ -207,8 +207,8 @@ export default function AmendmentReport() {
       <main className="flex-1 p-10">
         <div className="max-w-6xl mx-auto space-y-8">
           <p className="text-gray-900">
-            Detailed sentiment analysis for the selected amendment{" "}
-            <span className="italic"> with a 87.28% accurate report</span>.
+            Detailed sentiment analysis for the comments on selected amendment{" "}
+            <span className="italic"> with a 88% accurate report</span>.
           </p>
 
           {/* Error Display */}
@@ -279,7 +279,7 @@ export default function AmendmentReport() {
                         </span>
                       </li>
                       <li>
-                        <span
+                        <span     
                           className="inline-block w-3 h-3 rounded-full mr-2"
                           style={{ background: COLORS[1] }}
                         ></span>
