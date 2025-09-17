@@ -7,12 +7,14 @@ import { useDispatch } from "react-redux";
 import { setCsvFile } from "../redux/csvSlice";
 
 
-export default function CommentUpload() {
+export default function CommentUpload({aId}) {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
   const [jsonData, setJsonData] = useState([]);
   const [open, setOpen] = useState(false);
+  console.log("The id is ",aId);
+  localStorage.setItem("aId",aId);
  
 
   const handleChange = (e) => {
@@ -56,7 +58,8 @@ export default function CommentUpload() {
         navigate("/amendments/comments", {
       state: {
         comments: data.data, // backend response
-        csvFile: file        // actual File object
+        csvFile: file,      // actual File object
+        Id:localStorage.getItem("aId")
       },
     });
     } catch (e) {

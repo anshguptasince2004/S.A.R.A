@@ -52,14 +52,14 @@ def encode_image_to_base64(image_path):
 
 
 # ---------------- Routes ----------------
-@app.route("/outputs/<filename>")
-def download_output(filename):
-    """Serve output files (CSV, wordclouds) directly."""
-    return send_from_directory(app.config["OUTPUT_FOLDER"], filename)
+# @app.route("/outputs/<filename>")
+# def download_output(filename):
+#     """Serve output files (CSV, wordclouds) directly."""
+#     return send_from_directory(app.config["OUTPUT_FOLDER"], filename)
 
 
-@app.route("/analyze", methods=["POST"])
-def analyze():
+# @app.route("/analyze", methods=["POST"])
+# def analyze():
     try:
         if "file" not in request.files:
             return jsonify({"error": "No file part in the request"}), 400
@@ -133,6 +133,87 @@ def analyze():
 
     except Exception as e:
         return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    try:
+        if "file" not in request.files:
+            return jsonify({"error": "No file part in the request"}), 400
+
+        file = request.files["file"]
+        amendment_id = request.form.get("amendmentId")  # 👈 get amendmentId
+        if not amendment_id:
+            return jsonify({"error": "Missing amendmentId"}), 400
+
+        if file.filename == "":
+            return jsonify({"error": "No file selected"}), 400
+        if not allowed_file(file.filename):
+            return jsonify({"error": "Only CSV files are allowed"}), 400
+
+        # Amendment-specific folders
+        amendment_upload_folder = os.path.join(app.config["UPLOAD_FOLDER"], amendment_id)
+        amendment_output_folder = os.path.join(app.config["OUTPUT_FOLDER"], amendment_id)
+
+        os.makedirs(amendment_upload_folder, exist_ok=True)
+        os.makedirs(amendment_output_folder, exist_ok=True)
+
+        # Clear only that amendment’s folders
+        clear_folder(amendment_upload_folder)
+        clear_folder(amendment_output_folder)
+
+        # Save uploaded CSV
+        filename = secure_filename(file.filename)
+        input_path = os.path.join(amendment_upload_folder, filename)
+        file.save(input_path)
+
+        # Prepare output CSV path
+        output_filename = f"predicted_{filename}"
+        output_path = os.path.join(amendment_output_folder, output_filename)
+
+        # Run inference
+        summaries = run_inference(input_path, output_path)
+
+        # Load labeled CSV
+        if not os.path.exists(output_path):
+            return jsonify({"error": "Output CSV was not generated"}), 500
+
+        df = pd.read_csv(output_path)
+        if "label" not in df.columns:
+            return jsonify({"error": "Output CSV missing 'label' column"}), 500
+
+        counts = df["label"].value_counts().to_dict()
+        counts_dict = {
+            "negative": counts.get(0, 0),
+            "neutral": counts.get(1, 0),
+            "positive": counts.get(2, 0)
+        }
+
+        # WordCloud paths
+        wordclouds = {
+            "negative": {"url": f"/outputs/{amendment_id}/negative_wc.png"},
+            "neutral":  {"url": f"/outputs/{amendment_id}/neutral_wc.png"},
+            "positive": {"url": f"/outputs/{amendment_id}/positive_wc.png"}
+        }
+
+        response = {
+            "sentiment_counts": counts_dict,
+            "summaries": summaries,
+            "wordclouds": wordclouds,
+            "output_csv": f"/outputs/{amendment_id}/{output_filename}"
+        }
+
+        return jsonify(response)
+
+    except Exception as e:
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+
+# Serve per-amendment outputs
+@app.route("/outputs/<amendment_id>/<filename>")
+def download_output(amendment_id, filename):
+    folder = os.path.join(app.config["OUTPUT_FOLDER"], amendment_id)
+    return send_from_directory(folder, filename)
 
 
 # ---------------- Run App ----------------
