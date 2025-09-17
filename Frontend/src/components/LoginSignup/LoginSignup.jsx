@@ -1,12 +1,98 @@
 import React, { useState } from "react";
 import "./LoginSignup.css";
-import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { login } from "../../redux/authSlice";
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
+
+const SignupForm = ({ formData, setFormData, loading, setLoading }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm({ defaultValues: formData });
+
+  const handlePic = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "Joinin");
+      data.append("cloud_name", "divrqv1q7");
+
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/divrqv1q7/image/upload",
+        { method: "POST", body: data }
+      );
+
+      const upload = await res.json();
+      console.log("Uploaded:", upload);
+      setFormData((prev) => ({ ...prev, profilePic: upload.secure_url || "" }));
+    } catch (err) {
+      console.error("Upload error:", err);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      let res = await fetch("http://localhost:3000/api/admin/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: data.name,
+          email: data.email,
+          adminId: data.empId,
+          department: data.department,
+          password: data.password,
+          phoneNumber: data.phone,
+          profilePic: formData.profilePic,
+        }),
+      });
+      const result = await res.json();
+      if (res.status === 201) {
+        const token = result.token;
+        if (!token) return;
+
+        const jwtToken = jwtDecode(token);
+        dispatch(login({ user: result.adminInfo, token: jwtToken }));
+        reset();
+        navigate("/amendments");
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <motion.form
+      className="auth-form"
+      onSubmit={handleSubmit(onSubmit)}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="signup-grid">
+        <input {...register("name", { required: true })} placeholder="Full Name" />
+        <input {...register("email", { required: true })} type="email" placeholder="Official Email" />
+        <input {...register("empId", { required: true })} placeholder="Employee ID" />
+        <input {...register("department", { required: true })} placeholder="Department / Designation" />
+        <input {...register("phone", { required: true })} type="tel" placeholder="Phone Number" />
+        <input {...register("password", { required: true })} type="password" placeholder="Password" />
+        <input {...register("confirmPassword", { required: true })} type="password" placeholder="Confirm Password" />
+        <input type="file" name="profilePic" onChange={handlePic} />
+        <button type="submit" className="submit-btn">
+          {loading ? <CircularProgress size={22} /> : "Sign Up"}
+        </button>
+      </div>
+    </motion.form>
+  );
+};
 
 const LoginSignup = () => {
   const dispatch = useDispatch();
@@ -23,172 +109,39 @@ const LoginSignup = () => {
     confirmPassword: "",
     profilePic: "",
   });
-  const [loginForm,setLoginForm] = useState({
-    adminId:"",
-    password:""
-  })
+  const { register, handleSubmit } = useForm();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  const handlePic = async (e) => {
-    e.preventDefault();
-     const file = e.target.files[0]; // ✅ get file
-  
-
-    try {
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", "Joinin"); // your preset
-      data.append("cloud_name", "divrqv1q7"); // your cloud name
-
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/divrqv1q7/image/upload",
-        {
-          method: "POST",
-          body: data,
-        }
-      );
-
-      const upload = await res.json();
-      console.log("Uploaded:", upload);
-
-      // save uploaded URL to your formData state
-      setFormData((prev) => ({
-        ...prev,
-        profilePic: upload.secure_url || "", // Cloudinary returns secure_url
-      }));
-    } catch (err) {
-      console.error("Upload error:", err);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(false);
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.empId ||
-      !formData.department||!formData.phone||!formData.password||!formData.confirmPassword
-    ) {
-      toast.error("Please fill all the feilds");
-
-      
-      return;
-    }
-    if(formData.password!=formData.confirmPassword){
-      toast.error("Check Password")
-    }
-    try {
-      let res = await fetch("http://localhost:3000/api/admin/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: formData.name,
-          email: formData.email,
-          adminId: formData.empId,
-          department: formData.department,
-          password: formData.password,
-          phoneNumber: formData.phone,
-          profilePic: formData.profilePic,
-        }),
-      });
-      const result = await res.json();
-      if (res.status === 201) {
-        const token = result.token;
-
-        if (!token) {
-          toast.error("No token found");
-          return;
-        }
-
-        const jwtToken = jwtDecode(token);
-        dispatch(login({ user: result.adminInfo, token: jwtToken }));
-       
-        toast.success(`${result.fullName} registration successful`);
-
-        setFormData({
-          name: "",
-          email: "",
-          empId: "",
-          department: "",
-          phone: "",
-          password: "",
-          confirmPassword: "",
-          profilePic: "",
-        }); // <-- clear form fields here
-        navigate("/amendments");
-      } else {
-        toast.error(`Error: ${result.message || "Something went wrong"}`);
-      }
-    } catch (e) {
-      toast.error(e.message || "Error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange2 = (e)=>{
-    
-    setLoginForm({...loginForm,[e.target.name]:e.target.value})
-  }
-
-  const handleSubmit2 = async (e) => {
-    e.preventDefault();
+  const onLoginSubmit = async (data) => {
     setLoading(true);
-    if(!loginForm.adminId || !loginForm.password){
-      toast.error("Please fill all the feilds");
-      return;
-    }
-    try{
-       let res = await fetch("http://localhost:3000/api/admin/login", {
+    try {
+      let res = await fetch("http://localhost:3000/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          adminId:loginForm.adminId,
-          password:loginForm.password
-        }),
+        body: JSON.stringify(data),
       });
-     
-const dataBody = await res.json();
+      const body = await res.json();
       if (res.status === 200) {
-        const token = dataBody.token;
-        if (!token) {
-          toast.error("No token found");
-          return;
-        }
-
+        const token = body.token;
         const jwtToken = jwtDecode(token);
-        dispatch(
-          login({
-            user: dataBody.adminInfo,
-            token,
-            
-          })
-        );
-        
-        setLoading(false);
-        toast.success(`Login Successful`);
-
+        dispatch(login({ user: body.adminInfo, token: jwtToken }));
         navigate("/amendments");
-        setLoginForm({adminId:"",password:""}) 
       }
     } catch (e) {
-     
-      toast.error(`Error: ${e.message || "Something went wrong"}`);
+      console.error(e);
     } finally {
       setLoading(false);
     }
-
-
-
   };
 
   return (
     <div className="page">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="auth-box">
+      <motion.div
+        className="auth-box glass-card"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="auth-header">
           <img
             src="https://cdn-icons-png.flaticon.com/512/1828/1828490.png"
@@ -199,7 +152,12 @@ const dataBody = await res.json();
           <p className="subtitle">Sentiment Analysis & Reporting Assistant</p>
         </div>
 
-        <div className="card">
+        <motion.div
+          className="card glass-card"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2>{isLogin ? "Secure Login" : "Administrator Registration"}</h2>
           <p className="card-subtitle">
             {isLogin
@@ -208,106 +166,20 @@ const dataBody = await res.json();
           </p>
 
           {isLogin ? (
-            <>
-              <form className="auth-form" onSubmit={handleSubmit2}>
-                <input
-                
-                  type="text"
-                  name="adminId"
-                  placeholder="Enter AdminId"
-                  value={loginForm.adminId}
-                  onChange={handleChange2}
-                  required
-                />
-                <input
-                
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={loginForm.password}
-                  onChange={handleChange2}
-                  required
-                />
-                <button type="submit" className="submit-btn">
-                  {loading?<CircularProgress/>:"Login"}
-                </button>
-              </form>
-            </>
-          ) : (
-            <form className="auth-form" onSubmit={handleSubmit}>
-              <div className="signup-grid">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                class="reg"
-                  type="email"
-                  name="email"
-                  placeholder="Official Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="empId"
-                  placeholder="Employee ID"
-                  value={formData.empId}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                class="reg"
-                  type="text"
-                  name="department"
-                  placeholder="Department / Designation"
-                  value={formData.department}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                class="reg"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  className="confirmpw"
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                id="pic"
-                  type="file"
-                  name="profilePic"
-                  onChange={handlePic}
-                  className=""
-                />
-                <button type="submit" className="submit-btn">
-                  {loading?<CircularProgress/>:"Sign Up"}
-                </button>
-              </div>
+            <form className="auth-form" onSubmit={handleSubmit(onLoginSubmit)}>
+              <input {...register("adminId", { required: true })} placeholder="Admin ID" />
+              <input {...register("password", { required: true })} type="password" placeholder="Password" />
+              <button type="submit" className="submit-btn">
+                {loading ? <CircularProgress size={22} /> : "Login"}
+              </button>
             </form>
+          ) : (
+            <SignupForm
+              formData={formData}
+              setFormData={setFormData}
+              loading={loading}
+              setLoading={setLoading}
+            />
           )}
 
           <p className="switch-text">
@@ -316,10 +188,10 @@ const dataBody = await res.json();
               {isLogin ? "Sign up" : "Log in"}
             </span>
           </p>
-        </div>
+        </motion.div>
 
         <footer className="footer">© 2025 S.A.R.A. All rights reserved.</footer>
-      </div>
+      </motion.div>
     </div>
   );
 };
