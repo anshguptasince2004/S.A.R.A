@@ -1,0 +1,335 @@
+Author,tweet,Date,label,clean_tweet,sentiment
+Anil Kumar,Ye amendment startups ke liye burden badha dega.,2025-09-01,1,ye amendment startup ke liye burden badha dega,Neutral
+Sanya Joshi,Strict penalties MSMEs ko nuksan pohchayengi.,2025-09-03,1,strict penalty msmes ko nuksan pohchayengi,Neutral
+Rakesh Singh,Compliance cost bohot zyada ho jayega.,2025-09-04,1,compliance cost bohot zyada ho jayega,Neutral
+Priya Mehta,Implementation time unrealistic hai.,2025-09-05,1,implementation time unrealistic,Neutral
+Vishal Jain,"Clauses samajhna mushkil hai, bahut complex hain.",2025-09-06,0,clause samajhna mushkil bahut complex hain,Negative
+Shweta Rao,Stakeholders ki concerns ko ignore kiya gaya hai.,2025-09-07,1,stakeholder ki concern ko ignore kiya gaya,Neutral
+Nitin Gupta,"Penalty clauses harsh hain, relief nahi mila.",2025-09-08,0,penalty clause harsh hain relief nahi mila,Negative
+Lata Sharma,Kuch provisions redundant lag rahe hain.,2025-09-09,1,kuch provision redundant lag rahe hain,Neutral
+Manish Singh,Lack of clarity confusing hai.,2025-09-10,1,lack clarity confusing,Neutral
+Rekha Patel,Rules implementation mein problems aayengi.,2025-09-11,1,rule implementation problem aayengi,Neutral
+Rohit Verma,Government ne feedback nahi liya sahi tarike se.,2025-09-12,1,government ne feedback nahi liya sahi tarike se,Neutral
+Neha Reddy,New rules zyada strict hain.,2025-09-13,2,new rule zyada strict hain,Positive
+Suresh Kumar,Implementation ke liye adequate resources nahi hain.,2025-09-14,1,implementation ke liye adequate resource nahi hain,Neutral
+Kiran Joshi,Small businesses confuse ho jayengi in regulations se.,2025-09-15,0,small business confuse ho jayengi regulation se,Negative
+Alok Mehta,In provisions mein changes ki zaroorat hai.,2025-09-16,1,provision change ki zaroorat,Neutral
+Pooja Gupta,Bahut zyada paperwork hoga is amendment se.,2025-09-17,1,bahut zyada paperwork hoga amendment se,Neutral
+Harish Sharma,Penalty clauses unfair hain.,2025-09-18,0,penalty clause unfair hain,Negative
+Meera Iyer,Digital compliance mein problems aayengi.,2025-09-19,1,digital compliance problem aayengi,Neutral
+Varun Patel,The amendment lacks provisions for startup relief.,2025-09-20,1,amendment lack provision startup relief,Neutral
+Divya Singh,Certain points are not feasible economically.,2025-09-21,2,certain point feasible economically,Positive
+Kamal Verma,Mujhe lagta hai provision confusing hain.,2025-09-22,1,mujhe lagta provision confusing hain,Neutral
+Rina Das,Compliance deadlines unrealistic hain.,2025-09-23,1,compliance deadline unrealistic hain,Neutral
+Sanjay Reddy,Lack of sufficient training support.,2025-09-24,1,lack sufficient training support,Neutral
+Anita Mehra,Increases business risks without support.,2025-09-25,1,increase business risk without support,Neutral
+Vikas Shah,Penalty amounts excessive hain.,2025-09-26,1,penalty amount excessive hain,Neutral
+Alka Tripathi,Regulations thode zyada strict hain.,2025-09-27,1,regulation thode zyada strict hain,Neutral
+Rahul Kapoor,Clear guidelines ki kami.,2025-09-28,2,clear guideline ki kami,Positive
+Rita Malhotra,Overall impact negative lag raha hai.,2025-09-29,0,overall impact negative lag raha,Negative
+Suresh Jain,Rules zyada complicated hain.,2025-09-30,1,rule zyada complicated hain,Neutral
+Priya Nair,Implementation mein bohot dikkat hogi.,2025-09-30,1,implementation bohot dikkat hogi,Neutral
+Rahul Desai,The amendment has detailed rules but needs clear guidelines.,2025-09-01,2,amendment detailed rule need clear guideline,Positive
+Priya Sharma,"Kuch clauses samajhne mein problem hai, phir bhi overall fine hai.",2025-09-03,2,kuch clause samajhne problem bhi overall fine,Positive
+Arjun Patel,Impact ko samajhne ke liye implementation dekhna hoga.,2025-09-04,1,impact ko samajhne ke liye implementation dekhna hoga,Neutral
+Sneha Iyer,Some sections appear balanced.,2025-09-06,1,section appear balanced,Neutral
+Aditya Verma,"Further clarifications ki zaroorat hai, but draft promising hai.",2025-09-07,2,clarification ki zaroorat draft promising,Positive
+Neha Gupta,The amendment covers important ground but is still evolving.,2025-09-08,2,amendment cover important ground still evolving,Positive
+Vikram Joshi,Mixed reactions expected once enforced.,2025-09-09,1,mixed reaction expected enforced,Neutral
+Pooja Nair,Implementation ke process ko samajhna hoga.,2025-09-10,1,implementation ke process ko samajhna hoga,Neutral
+Sanjay Malhotra,This amendment includes various detailed provisions.,2025-09-12,2,amendment includes various detailed provision,Positive
+Kavita Reddy,Overall it looks reasonable but needs government support.,2025-09-13,1,overall look reasonable need government support,Neutral
+Rahul Desai,Kuch queries abhi bhi unanswered hai.,2025-09-14,1,kuch query abhi bhi unanswered,Neutral
+Priya Sharma,The balance between regulation and growth is decent.,2025-09-15,2,balance regulation growth decent,Positive
+Arjun Patel,Effects of this amendment will be clearer with time.,2025-09-16,1,effect amendment clearer time,Neutral
+Sneha Iyer,Kya final guidelines aaengi? Intezaar hai.,2025-09-17,1,kya final guideline aaengi intezaar,Neutral
+Aditya Verma,The language needs simplification for better understanding.,2025-09-18,2,language need simplification better understanding,Positive
+Neha Gupta,Ye amendment SMEs ke liye new opportunities laa sakta hai.,2025-09-19,2,ye amendment smes ke liye new opportunity laa sakta,Positive
+Vikram Joshi,Regulatory framework kaafi clear dikh raha hai.,2025-09-20,2,regulatory framework kaafi clear dikh raha,Positive
+Pooja Nair,Starting phase mein challenges aayeinge but hopeful hain.,2025-09-21,1,starting phase challenge aayeinge hopeful hain,Neutral
+Sanjay Malhotra,Certain sections ki clarity badaani hogi.,2025-09-22,2,certain section ki clarity badaani hogi,Positive
+Anil Kumar,Ye amendment startups ke liye burden badha dega.,2025-09-01,1,ye amendment startup ke liye burden badha dega,Neutral
+Sanya Joshi,Strict penalties MSMEs ko nuksan pohchayengi.,2025-09-03,1,strict penalty msmes ko nuksan pohchayengi,Neutral
+Rakesh Singh,Compliance cost bohot zyada ho jayega.,2025-09-04,1,compliance cost bohot zyada ho jayega,Neutral
+Priya Mehta,Implementation time unrealistic hai.,2025-09-05,1,implementation time unrealistic,Neutral
+Vishal Jain,"Clauses samajhna mushkil hai, bahut complex hain.",2025-09-06,0,clause samajhna mushkil bahut complex hain,Negative
+Shweta Rao,Stakeholders ki concerns ko ignore kiya gaya hai.,2025-09-07,1,stakeholder ki concern ko ignore kiya gaya,Neutral
+Nitin Gupta,"Penalty clauses harsh hain, relief nahi mila.",2025-09-08,0,penalty clause harsh hain relief nahi mila,Negative
+Lata Sharma,Kuch provisions redundant lag rahe hain.,2025-09-09,1,kuch provision redundant lag rahe hain,Neutral
+Manish Singh,Lack of clarity confusing hai.,2025-09-10,1,lack clarity confusing,Neutral
+Rekha Patel,Rules implementation mein problems aayengi.,2025-09-11,1,rule implementation problem aayengi,Neutral
+Rohit Verma,Government ne feedback nahi liya sahi tarike se.,2025-09-12,1,government ne feedback nahi liya sahi tarike se,Neutral
+Neha Reddy,New rules zyada strict hain.,2025-09-13,2,new rule zyada strict hain,Positive
+Suresh Kumar,Implementation ke liye adequate resources nahi hain.,2025-09-14,1,implementation ke liye adequate resource nahi hain,Neutral
+Kiran Joshi,Small businesses confuse ho jayengi in regulations se.,2025-09-15,0,small business confuse ho jayengi regulation se,Negative
+Alok Mehta,In provisions mein changes ki zaroorat hai.,2025-09-16,1,provision change ki zaroorat,Neutral
+Pooja Gupta,Bahut zyada paperwork hoga is amendment se.,2025-09-17,1,bahut zyada paperwork hoga amendment se,Neutral
+Harish Sharma,Penalty clauses unfair hain.,2025-09-18,0,penalty clause unfair hain,Negative
+Meera Iyer,Digital compliance mein problems aayengi.,2025-09-19,1,digital compliance problem aayengi,Neutral
+Varun Patel,The amendment lacks provisions for startup relief.,2025-09-20,1,amendment lack provision startup relief,Neutral
+Divya Singh,Certain points are not feasible economically.,2025-09-21,2,certain point feasible economically,Positive
+Kamal Verma,Mujhe lagta hai provision confusing hain.,2025-09-22,1,mujhe lagta provision confusing hain,Neutral
+Rina Das,Compliance deadlines unrealistic hain.,2025-09-23,1,compliance deadline unrealistic hain,Neutral
+Sanjay Reddy,Lack of sufficient training support.,2025-09-24,1,lack sufficient training support,Neutral
+Anita Mehra,Increases business risks without support.,2025-09-25,1,increase business risk without support,Neutral
+Vikas Shah,Penalty amounts excessive hain.,2025-09-26,1,penalty amount excessive hain,Neutral
+Alka Tripathi,Regulations thode zyada strict hain.,2025-09-27,1,regulation thode zyada strict hain,Neutral
+Rahul Kapoor,Clear guidelines ki kami.,2025-09-28,2,clear guideline ki kami,Positive
+Rita Malhotra,Overall impact negative lag raha hai.,2025-09-29,0,overall impact negative lag raha,Negative
+Suresh Jain,Rules zyada complicated hain.,2025-09-30,1,rule zyada complicated hain,Neutral
+Priya Nair,Implementation mein bohot dikkat hogi.,2025-09-30,1,implementation bohot dikkat hogi,Neutral
+Rahul Desai,The amendment has detailed rules but needs clear guidelines.,2025-09-01,2,amendment detailed rule need clear guideline,Positive
+Priya Sharma,"Kuch clauses samajhne mein problem hai, phir bhi overall fine hai.",2025-09-03,2,kuch clause samajhne problem bhi overall fine,Positive
+Arjun Patel,Impact ko samajhne ke liye implementation dekhna hoga.,2025-09-04,1,impact ko samajhne ke liye implementation dekhna hoga,Neutral
+Sneha Iyer,Some sections appear balanced.,2025-09-06,1,section appear balanced,Neutral
+Aditya Verma,"Further clarifications ki zaroorat hai, but draft promising hai.",2025-09-07,2,clarification ki zaroorat draft promising,Positive
+Neha Gupta,The amendment covers important ground but is still evolving.,2025-09-08,2,amendment cover important ground still evolving,Positive
+Vikram Joshi,Mixed reactions expected once enforced.,2025-09-09,1,mixed reaction expected enforced,Neutral
+Pooja Nair,Implementation ke process ko samajhna hoga.,2025-09-10,1,implementation ke process ko samajhna hoga,Neutral
+Sanjay Malhotra,This amendment includes various detailed provisions.,2025-09-12,2,amendment includes various detailed provision,Positive
+Kavita Reddy,Overall it looks reasonable but needs government support.,2025-09-13,1,overall look reasonable need government support,Neutral
+Rahul Desai,Kuch queries abhi bhi unanswered hai.,2025-09-14,1,kuch query abhi bhi unanswered,Neutral
+Priya Sharma,The balance between regulation and growth is decent.,2025-09-15,2,balance regulation growth decent,Positive
+Arjun Patel,Effects of this amendment will be clearer with time.,2025-09-16,1,effect amendment clearer time,Neutral
+Sneha Iyer,Kya final guidelines aaengi? Intezaar hai.,2025-09-17,1,kya final guideline aaengi intezaar,Neutral
+Aditya Verma,The language needs simplification for better understanding.,2025-09-18,2,language need simplification better understanding,Positive
+Neha Gupta,Ye amendment SMEs ke liye new opportunities laa sakta hai.,2025-09-19,2,ye amendment smes ke liye new opportunity laa sakta,Positive
+Vikram Joshi,Regulatory framework kaafi clear dikh raha hai.,2025-09-20,2,regulatory framework kaafi clear dikh raha,Positive
+Pooja Nair,Starting phase mein challenges aayeinge but hopeful hain.,2025-09-21,1,starting phase challenge aayeinge hopeful hain,Neutral
+Sanjay Malhotra,Certain sections ki clarity badaani hogi.,2025-09-22,2,certain section ki clarity badaani hogi,Positive
+Kavita Reddy,The amendment tries to balance various stakeholder needs.,2025-09-23,1,amendment try balance various stakeholder need,Neutral
+Rahul Desai,Draft mein kuch points improve kiye jaa sakte hain.,2025-09-24,1,draft kuch point improve kiye jaa sakte hain,Neutral
+Priya Sharma,Ye ek positive direction hai lekin aur feedback chahiye.,2025-09-25,2,ye ek positive direction lekin feedback chahiye,Positive
+Arjun Patel,Isme processing time thoda zyada lag sakta hai.,2025-09-26,1,isme processing time thoda zyada lag sakta,Neutral
+Sneha Iyer,The amendments focus on digital processes which is good.,2025-09-27,2,amendment focus digital process good,Positive
+Aditya Verma,Zyada documentation ki requirement kuch mushkil kar sakti hai.,2025-09-28,1,zyada documentation ki requirement kuch mushkil kar sakti,Neutral
+Neha Gupta,Better communication needed with stakeholders.,2025-09-29,2,better communication needed stakeholder,Positive
+Vikram Joshi,Ek comprehensive framework hai jo time ke sath improve hoga.,2025-09-30,1,ek comprehensive framework jo time ke sath improve hoga,Neutral
+Pooja Nair,The amendment is socially and economically relevant.,2025-09-30,2,amendment socially economically relevant,Positive
+Sanjay Malhotra,Kuch sections thode confusing lag rahe hain.,2025-09-29,1,kuch section thode confusing lag rahe hain,Neutral
+Kavita Reddy,Government support se implementation easy hoga.,2025-09-28,2,government support se implementation easy hoga,Positive
+Rahul Desai,Sampling phase ke baad accha feedback aayega.,2025-09-27,1,sampling phase ke baad accha feedback aayega,Neutral
+Sanjay Kumar,Ye amendment small businesses ke liye bahut useful hai.,2025-09-01,0,ye amendment small business ke liye bahut useful,Negative
+Kavita Reddy,Digital filing badhane se ease of doing business improve hoga.,2025-09-02,1,digital filing badhane se ease business improve hoga,Neutral
+Amit Joshi,New rules transparency aur efficiency le aayeinge.,2025-09-03,2,new rule transparency efficiency le aayeinge,Positive
+Neha Singh,This amendment will boost MSME growth.,2025-09-04,1,amendment boost msme growth,Neutral
+Rajesh Verma,Investors ke liye ye positive sign hai.,2025-09-05,2,investor ke liye ye positive sign,Positive
+Meera Patel,Compliance process ko simplify kiya gaya hai.,2025-09-06,1,compliance process ko simplify kiya gaya,Neutral
+Aditya Mehta,Bureaucracy kam hone se businesses ko fayda hoga.,2025-09-07,1,bureaucracy kam hone se business ko fayda hoga,Neutral
+Pooja Sharma,Funds ki availability improve hogi due to new amendment.,2025-09-08,2,fund ki availability improve hogi due new amendment,Positive
+Vikram Sethi,Good step towards better governance.,2025-09-09,2,good step towards better governance,Positive
+Anjali Jain,Simplified compliance se startups ko help milegi.,2025-09-10,1,simplified compliance se startup ko help milegi,Neutral
+Rohit Singh,Encouraging results expected due to this amendment.,2025-09-11,0,encouraging result expected due amendment,Negative
+Sonal Desai,The government has taken a well-thought approach here.,2025-09-12,1,government taken wellthought approach,Neutral
+Deepak Kumar,Ye amendment market confidence ko badhawa dega.,2025-09-13,1,ye amendment market confidence ko badhawa dega,Neutral
+Aruna Reddy,Economic growth will improve Krishna Bharat ki wajah se.,2025-09-14,2,economic growth improve krishna bharat ki wajah se,Positive
+Rajat Malhotra,This amendment is a step towards modernization.,2025-09-15,1,amendment step towards modernization,Neutral
+Smita Verma,Positive implementation expected from this legislation.,2025-09-16,2,positive implementation expected legislation,Positive
+Anil Singh,Rules clear aur easy to understand hain.,2025-09-17,2,rule clear easy understand hain,Positive
+Nisha Joshi,Small businesses ke liye faydemand reforms hai.,2025-09-18,0,small business ke liye faydemand reform,Negative
+Ramesh Kumar,MSME sector ko help milegi is amendment se.,2025-09-19,1,msme sector ko help milegi amendment se,Neutral
+Priya Malhotra,Ye amendment business-friendly hai and encouraging hai.,2025-09-20,1,ye amendment businessfriendly encouraging,Neutral
+Vikram Patel,Digital processes ko enhance kiya gaya hai.,2025-09-21,1,digital process ko enhance kiya gaya,Neutral
+Shilpa Reddy,Investors ke liye trust badhane wala amendment hai.,2025-09-22,1,investor ke liye trust badhane wala amendment,Neutral
+Rahul Gupta,Improved transparency se market benefits hoga.,2025-09-23,1,improved transparency se market benefit hoga,Neutral
+Kiran Singh,The amendment focus karta hai ease of doing business pe.,2025-09-24,1,amendment focus karta ease business pe,Neutral
+Sonia Verma,Government ne business environment ko dhyan mein rakha hai.,2025-09-25,1,government ne business environment ko dhyan rakha,Neutral
+Manish Patel,Ye legislation investor confidence badhata hai.,2025-09-26,1,ye legislation investor confidence badhata,Neutral
+Anita Sharma,Startup ecosystem ko promote karne wala amendment hai.,2025-09-27,1,startup ecosystem ko promote karne wala amendment,Neutral
+Suresh Joshi,Karma aur compliance processes smooth banenge.,2025-09-28,1,karma compliance process smooth banenge,Neutral
+Rhita Desai,The amendment is proactive and well designed.,2025-09-29,1,amendment proactive well designed,Neutral
+Harish Kumar,Business sectors ko boost dene wala regulation hai.,2025-09-30,1,business sector ko boost dene wala regulation,Neutral
+Sameer Shah,Penalties have become more transparent than before.,2025-09-02,1,penalty become transparent,Neutral
+Nikita Rao,Digital updates kaafi acchi hain.,2025-09-06,1,digital update kaafi acchi hain,Neutral
+Ajay Singh,Amendment introduces new training modules.,2025-09-08,2,amendment introduces new training module,Positive
+Bhavna Patel,It would be great if feedback cycle is improved.,2025-09-10,2,would great feedback cycle improved,Positive
+Geeta Iyer,Legal clauses samajhne mein ab easy hai.,2025-09-14,2,legal clause samajhne ab easy,Positive
+Ritu Desai,Documentation ab zyada streamline ho gaya hai.,2025-09-16,1,documentation ab zyada streamline ho gaya,Neutral
+Neeraj Jain,Overall companies ke liye beneficial hai.,2025-09-18,1,overall company ke liye beneficial,Neutral
+Deepa Mehta,Government updates ko efficiently communicate kare.,2025-09-21,1,government update ko efficiently communicate kare,Neutral
+Kavita Reddy,The amendment tries to balance various stakeholder needs.,2025-09-23,1,amendment try balance various stakeholder need,Neutral
+Rahul Desai,Draft mein kuch points improve kiye jaa sakte hain.,2025-09-24,1,draft kuch point improve kiye jaa sakte hain,Neutral
+Priya Sharma,Ye ek positive direction hai lekin aur feedback chahiye.,2025-09-25,2,ye ek positive direction lekin feedback chahiye,Positive
+Arjun Patel,Isme processing time thoda zyada lag sakta hai.,2025-09-26,1,isme processing time thoda zyada lag sakta,Neutral
+Sneha Iyer,The amendments focus on digital processes which is good.,2025-09-27,2,amendment focus digital process good,Positive
+Aditya Verma,Zyada documentation ki requirement kuch mushkil kar sakti hai.,2025-09-28,1,zyada documentation ki requirement kuch mushkil kar sakti,Neutral
+Neha Gupta,Better communication needed with stakeholders.,2025-09-29,2,better communication needed stakeholder,Positive
+Vikram Joshi,Ek comprehensive framework hai jo time ke sath improve hoga.,2025-09-30,1,ek comprehensive framework jo time ke sath improve hoga,Neutral
+Pooja Nair,The amendment is socially and economically relevant.,2025-09-30,2,amendment socially economically relevant,Positive
+Sanjay Malhotra,Kuch sections thode confusing lag rahe hain.,2025-09-29,1,kuch section thode confusing lag rahe hain,Neutral
+Kavita Reddy,Government support se implementation easy hoga.,2025-09-28,2,government support se implementation easy hoga,Positive
+Rahul Desai,Sampling phase ke baad accha feedback aayega.,2025-09-27,1,sampling phase ke baad accha feedback aayega,Neutral
+Sanjay Kumar,Ye amendment small businesses ke liye bahut useful hai.,2025-09-01,0,ye amendment small business ke liye bahut useful,Negative
+Kavita Reddy,Digital filing badhane se ease of doing business improve hoga.,2025-09-02,1,digital filing badhane se ease business improve hoga,Neutral
+Amit Joshi,New rules transparency aur efficiency le aayeinge.,2025-09-03,2,new rule transparency efficiency le aayeinge,Positive
+Neha Singh,This amendment will boost MSME growth.,2025-09-04,1,amendment boost msme growth,Neutral
+Rajesh Verma,Investors ke liye ye positive sign hai.,2025-09-05,2,investor ke liye ye positive sign,Positive
+Meera Patel,Compliance process ko simplify kiya gaya hai.,2025-09-06,1,compliance process ko simplify kiya gaya,Neutral
+Aditya Mehta,Bureaucracy kam hone se businesses ko fayda hoga.,2025-09-07,1,bureaucracy kam hone se business ko fayda hoga,Neutral
+Pooja Sharma,Funds ki availability improve hogi due to new amendment.,2025-09-08,2,fund ki availability improve hogi due new amendment,Positive
+Vikram Sethi,Good step towards better governance.,2025-09-09,2,good step towards better governance,Positive
+Anjali Jain,Simplified compliance se startups ko help milegi.,2025-09-10,1,simplified compliance se startup ko help milegi,Neutral
+Rohit Singh,Encouraging results expected due to this amendment.,2025-09-11,0,encouraging result expected due amendment,Negative
+Sonal Desai,The government has taken a well-thought approach here.,2025-09-12,1,government taken wellthought approach,Neutral
+Deepak Kumar,Ye amendment market confidence ko badhawa dega.,2025-09-13,1,ye amendment market confidence ko badhawa dega,Neutral
+Aruna Reddy,Economic growth will improve Krishna Bharat ki wajah se.,2025-09-14,2,economic growth improve krishna bharat ki wajah se,Positive
+Rajat Malhotra,This amendment is a step towards modernization.,2025-09-15,1,amendment step towards modernization,Neutral
+Smita Verma,Positive implementation expected from this legislation.,2025-09-16,2,positive implementation expected legislation,Positive
+Anil Singh,Rules clear aur easy to understand hain.,2025-09-17,2,rule clear easy understand hain,Positive
+Nisha Joshi,Small businesses ke liye faydemand reforms hai.,2025-09-18,0,small business ke liye faydemand reform,Negative
+Ramesh Kumar,MSME sector ko help milegi is amendment se.,2025-09-19,1,msme sector ko help milegi amendment se,Neutral
+Priya Malhotra,Ye amendment business-friendly hai and encouraging hai.,2025-09-20,1,ye amendment businessfriendly encouraging,Neutral
+Vikram Patel,Digital processes ko enhance kiya gaya hai.,2025-09-21,1,digital process ko enhance kiya gaya,Neutral
+Shilpa Reddy,Investors ke liye trust badhane wala amendment hai.,2025-09-22,1,investor ke liye trust badhane wala amendment,Neutral
+Rahul Gupta,Improved transparency se market benefits hoga.,2025-09-23,1,improved transparency se market benefit hoga,Neutral
+Kiran Singh,The amendment focus karta hai ease of doing business pe.,2025-09-24,1,amendment focus karta ease business pe,Neutral
+Sonia Verma,Government ne business environment ko dhyan mein rakha hai.,2025-09-25,1,government ne business environment ko dhyan rakha,Neutral
+Manish Patel,Ye legislation investor confidence badhata hai.,2025-09-26,1,ye legislation investor confidence badhata,Neutral
+Anita Sharma,Startup ecosystem ko promote karne wala amendment hai.,2025-09-27,1,startup ecosystem ko promote karne wala amendment,Neutral
+Suresh Joshi,Karma aur compliance processes smooth banenge.,2025-09-28,1,karma compliance process smooth banenge,Neutral
+Rhita Desai,The amendment is proactive and well designed.,2025-09-29,1,amendment proactive well designed,Neutral
+Harish Kumar,Business sectors ko boost dene wala regulation hai.,2025-09-30,1,business sector ko boost dene wala regulation,Neutral
+Sameer Shah,Penalties have become more transparent than before.,2025-09-02,1,penalty become transparent,Neutral
+Nikita Rao,Digital updates kaafi acchi hain.,2025-09-06,1,digital update kaafi acchi hain,Neutral
+Ajay Singh,Amendment introduces new training modules.,2025-09-08,2,amendment introduces new training module,Positive
+Bhavna Patel,It would be great if feedback cycle is improved.,2025-09-10,2,would great feedback cycle improved,Positive
+Geeta Iyer,Legal clauses samajhne mein ab easy hai.,2025-09-14,2,legal clause samajhne ab easy,Positive
+Ritu Desai,Documentation ab zyada streamline ho gaya hai.,2025-09-16,1,documentation ab zyada streamline ho gaya,Neutral
+Neeraj Jain,Overall companies ke liye beneficial hai.,2025-09-18,1,overall company ke liye beneficial,Neutral
+Deepa Mehta,Government updates ko efficiently communicate kare.,2025-09-21,1,government update ko efficiently communicate kare,Neutral
+Kavita Reddy,The amendment tries to balance various stakeholder needs.,2025-09-23,1,amendment try balance various stakeholder need,Neutral
+Rahul Desai,Draft mein kuch points improve kiye jaa sakte hain.,2025-09-24,1,draft kuch point improve kiye jaa sakte hain,Neutral
+Priya Sharma,Ye ek positive direction hai lekin aur feedback chahiye.,2025-09-25,2,ye ek positive direction lekin feedback chahiye,Positive
+Arjun Patel,Isme processing time thoda zyada lag sakta hai.,2025-09-26,1,isme processing time thoda zyada lag sakta,Neutral
+Sneha Iyer,The amendments focus on digital processes which is good.,2025-09-27,2,amendment focus digital process good,Positive
+Aditya Verma,Zyada documentation ki requirement kuch mushkil kar sakti hai.,2025-09-28,1,zyada documentation ki requirement kuch mushkil kar sakti,Neutral
+Neha Gupta,Better communication needed with stakeholders.,2025-09-29,2,better communication needed stakeholder,Positive
+Vikram Joshi,Ek comprehensive framework hai jo time ke sath improve hoga.,2025-09-30,1,ek comprehensive framework jo time ke sath improve hoga,Neutral
+Pooja Nair,The amendment is socially and economically relevant.,2025-09-30,2,amendment socially economically relevant,Positive
+Sanjay Malhotra,Kuch sections thode confusing lag rahe hain.,2025-09-29,1,kuch section thode confusing lag rahe hain,Neutral
+Kavita Reddy,Government support se implementation easy hoga.,2025-09-28,2,government support se implementation easy hoga,Positive
+Rahul Desai,Sampling phase ke baad accha feedback aayega.,2025-09-27,1,sampling phase ke baad accha feedback aayega,Neutral
+Sanjay Kumar,Ye amendment small businesses ke liye bahut useful hai.,2025-09-01,0,ye amendment small business ke liye bahut useful,Negative
+Kavita Reddy,Digital filing badhane se ease of doing business improve hoga.,2025-09-02,1,digital filing badhane se ease business improve hoga,Neutral
+Amit Joshi,New rules transparency aur efficiency le aayeinge.,2025-09-03,2,new rule transparency efficiency le aayeinge,Positive
+Neha Singh,This amendment will boost MSME growth.,2025-09-04,1,amendment boost msme growth,Neutral
+Rajesh Verma,Investors ke liye ye positive sign hai.,2025-09-05,2,investor ke liye ye positive sign,Positive
+Meera Patel,Compliance process ko simplify kiya gaya hai.,2025-09-06,1,compliance process ko simplify kiya gaya,Neutral
+Aditya Mehta,Bureaucracy kam hone se businesses ko fayda hoga.,2025-09-07,1,bureaucracy kam hone se business ko fayda hoga,Neutral
+Pooja Sharma,Funds ki availability improve hogi due to new amendment.,2025-09-08,2,fund ki availability improve hogi due new amendment,Positive
+Vikram Sethi,Good step towards better governance.,2025-09-09,2,good step towards better governance,Positive
+Anjali Jain,Simplified compliance se startups ko help milegi.,2025-09-10,1,simplified compliance se startup ko help milegi,Neutral
+Rohit Singh,Encouraging results expected due to this amendment.,2025-09-11,0,encouraging result expected due amendment,Negative
+Sonal Desai,The government has taken a well-thought approach here.,2025-09-12,1,government taken wellthought approach,Neutral
+Deepak Kumar,Ye amendment market confidence ko badhawa dega.,2025-09-13,1,ye amendment market confidence ko badhawa dega,Neutral
+Aruna Reddy,Economic growth will improve Krishna Bharat ki wajah se.,2025-09-14,2,economic growth improve krishna bharat ki wajah se,Positive
+Rajat Malhotra,This amendment is a step towards modernization.,2025-09-15,1,amendment step towards modernization,Neutral
+Smita Verma,Positive implementation expected from this legislation.,2025-09-16,2,positive implementation expected legislation,Positive
+Anil Singh,Rules clear aur easy to understand hain.,2025-09-17,2,rule clear easy understand hain,Positive
+Nisha Joshi,Small businesses ke liye faydemand reforms hai.,2025-09-18,0,small business ke liye faydemand reform,Negative
+Ramesh Kumar,MSME sector ko help milegi is amendment se.,2025-09-19,1,msme sector ko help milegi amendment se,Neutral
+Priya Malhotra,Ye amendment business-friendly hai and encouraging hai.,2025-09-20,1,ye amendment businessfriendly encouraging,Neutral
+Vikram Patel,Digital processes ko enhance kiya gaya hai.,2025-09-21,1,digital process ko enhance kiya gaya,Neutral
+Shilpa Reddy,Investors ke liye trust badhane wala amendment hai.,2025-09-22,1,investor ke liye trust badhane wala amendment,Neutral
+Rahul Gupta,Improved transparency se market benefits hoga.,2025-09-23,1,improved transparency se market benefit hoga,Neutral
+Kiran Singh,The amendment focus karta hai ease of doing business pe.,2025-09-24,1,amendment focus karta ease business pe,Neutral
+Sonia Verma,Government ne business environment ko dhyan mein rakha hai.,2025-09-25,1,government ne business environment ko dhyan rakha,Neutral
+Manish Patel,Ye legislation investor confidence badhata hai.,2025-09-26,1,ye legislation investor confidence badhata,Neutral
+Anita Sharma,Startup ecosystem ko promote karne wala amendment hai.,2025-09-27,1,startup ecosystem ko promote karne wala amendment,Neutral
+Suresh Joshi,Karma aur compliance processes smooth banenge.,2025-09-28,1,karma compliance process smooth banenge,Neutral
+Rhita Desai,The amendment is proactive and well designed.,2025-09-29,1,amendment proactive well designed,Neutral
+Harish Kumar,Business sectors ko boost dene wala regulation hai.,2025-09-30,1,business sector ko boost dene wala regulation,Neutral
+Sameer Shah,Penalties have become more transparent than before.,2025-09-02,1,penalty become transparent,Neutral
+Nikita Rao,Digital updates kaafi acchi hain.,2025-09-06,1,digital update kaafi acchi hain,Neutral
+Ajay Singh,Amendment introduces new training modules.,2025-09-08,2,amendment introduces new training module,Positive
+Bhavna Patel,It would be great if feedback cycle is improved.,2025-09-10,2,would great feedback cycle improved,Positive
+Geeta Iyer,Legal clauses samajhne mein ab easy hai.,2025-09-14,2,legal clause samajhne ab easy,Positive
+Ritu Desai,Documentation ab zyada streamline ho gaya hai.,2025-09-16,1,documentation ab zyada streamline ho gaya,Neutral
+Neeraj Jain,Overall companies ke liye beneficial hai.,2025-09-18,1,overall company ke liye beneficial,Neutral
+Deepa Mehta,Government updates ko efficiently communicate kare.,2025-09-21,1,government update ko efficiently communicate kare,Neutral
+Amit Agarwal,Ye amendment bahut hi positive step hai.,2025-09-01,2,ye amendment bahut hi positive step,Positive
+Ritu Sharma,Compliance process ab simple ho gaya hai.,2025-09-02,1,compliance process ab simple ho gaya,Neutral
+Vikram Singh,Digital filing se businesses ko fayda hoga.,2025-09-03,1,digital filing se business ko fayda hoga,Neutral
+Sonal Mehta,Stricter laws se protection achha milega.,2025-09-03,1,stricter law se protection achha milega,Neutral
+Anil Patel,Good effort by government to simplify norms.,2025-09-04,2,good effort government simplify norm,Positive
+Neha Goyal,MSMEs ke liye accommodations diye gaye hain.,2025-09-05,1,msmes ke liye accommodation diye gaye hain,Neutral
+Rajesh Joshi,Investor confidence ko boost karega.,2025-09-06,1,investor confidence ko boost karega,Neutral
+Sneha Nair,"Some rules still need clarity, but overall good.",2025-09-07,2,rule still need clarity overall good,Positive
+Karan Malhotra,Ab penalties zyada clear hain aur justified hain.,2025-09-07,2,ab penalty zyada clear hain justified hain,Positive
+Pooja Desai,Implementation timeline realistic lagti hai.,2025-09-08,2,implementation timeline realistic lagti,Positive
+Harshvardhan Rana,Ye amendment company governance ko improve karega.,2025-09-09,1,ye amendment company governance ko improve karega,Neutral
+Neelam Verma,Sarkar ke decision se business environment sudhrega.,2025-09-10,1,sarkar ke decision se business environment sudhrega,Neutral
+Rohan Kapoor,Timely release of amendment appreciated.,2025-09-11,2,timely release amendment appreciated,Positive
+Mina Shah,Startups ko relief mil raha hai in new policy changes.,2025-09-12,2,startup ko relief mil raha new policy change,Positive
+Manju Gupta,Rules ab easy to understand hain for common users.,2025-09-12,0,rule ab easy understand hain common user,Negative
+Siddharth Iyer,Documentation requirements kam hue hain.,2025-09-13,1,documentation requirement kam hue hain,Neutral
+Anita Dixit,Kaafi sari stakeholders se feedback liya gaya hai.,2025-09-14,1,kaafi sari stakeholder se feedback liya gaya,Neutral
+Rakesh Chauhan,Ab compliance cost kam hoga businesses ke liye.,2025-09-15,1,ab compliance cost kam hoga business ke liye,Neutral
+Shikha Roy,Implementation process transparent hogi.,2025-09-15,1,implementation process transparent hogi,Neutral
+Ayesha Khan,Government ne businesses ke liye acchi policies banayi hain.,2025-09-16,1,government ne business ke liye acchi policy banayi hain,Neutral
+Pranav Joshi,This amendment encourages innovation.,2025-09-17,1,amendment encourages innovation,Neutral
+Swati Soman,Digital compliance ki taraf accha kadam hai.,2025-09-17,1,digital compliance ki taraf accha kadam,Neutral
+Aditya Shukla,The amendment addresses some loopholes properly.,2025-09-18,1,amendment address loophole properly,Neutral
+Bhavna Mehta,Kuch sections mein zyada clarity ki zarurat hai.,2025-09-19,1,kuch section zyada clarity ki zarurat,Neutral
+Girish Patel,Business processes streamlined kiye gaye hain.,2025-09-19,1,business process streamlined kiye gaye hain,Neutral
+Jyoti Sharma,Saari compliances ab digital hain aur easy to perform.,2025-09-20,2,saari compliance ab digital hain easy perform,Positive
+Rohit Mishra,Strong investor protections ke provisions hain.,2025-09-20,2,strong investor protection ke provision hain,Positive
+Neha Kumar,Ab financial disclosures easy ho jayengi.,2025-09-21,2,ab financial disclosure easy ho jayengi,Positive
+Saurabh Tiwari,Business friendly rules hain yeh amendments mein.,2025-09-21,2,business friendly rule hain amendment,Positive
+Vaishali Joshi,Feedback mechanism se amendments aur improve honge.,2025-09-22,1,feedback mechanism se amendment improve honge,Neutral
+Rajeev Gandhi,Ye amendment transparency badhata hai.,2025-09-22,1,ye amendment transparency badhata,Neutral
+Kajal Desai,Businesses ke liye compliance easy kar diya hai.,2025-09-23,2,business ke liye compliance easy kar diya,Positive
+Mahesh Shah,Regulatory reforms ko support karta hoon.,2025-09-23,1,regulatory reform ko support karta hoon,Neutral
+Anjali Kumar,Kaafi fruits dikhenge jald amateur businesses ko.,2025-09-24,1,kaafi fruit dikhenge jald amateur business ko,Neutral
+Atul Parikh,Compliance cost aur time dono kam hue hain.,2025-09-24,1,compliance cost time dono kam hue hain,Neutral
+Nita Rai,Bureaucrazy reduce karna is amendment ka aim hai.,2025-09-25,1,bureaucrazy reduce karna amendment ka aim,Neutral
+Amit Shah,The new framework is well-thought and inclusive.,2025-09-25,2,new framework wellthought inclusive,Positive
+Kanika Malhotra,Ye amendment investors ko attract karega.,2025-09-26,1,ye amendment investor ko attract karega,Neutral
+Suresh Nair,Business environment mein accha change dikhega.,2025-09-26,1,business environment accha change dikhega,Neutral
+Rina Kapoor,Documentation aur reporting now easier hai.,2025-09-27,1,documentation reporting easier,Neutral
+Tarun Verma,Legal processes ab zyada simple hain compliance ke liye.,2025-09-27,2,legal process ab zyada simple hain compliance ke liye,Positive
+Radha Menon,Ab regulations ko samajhna asaan hoga.,2025-09-28,1,ab regulation ko samajhna asaan hoga,Neutral
+Sameer Khan,Naye amendments se business confidence badhega.,2025-09-28,1,naye amendment se business confidence badhega,Neutral
+Deepika Sharma,Startups ke liye bohot madadgar amendments hain.,2025-09-29,1,startup ke liye bohot madadgar amendment hain,Neutral
+Kiran Pillai,Operations streamline karne mein madad milegi.,2025-09-29,1,operation streamline karne madad milegi,Neutral
+Anil Rathi,Ye amendment long term mein sabke liye faydemand hoga.,2025-09-30,0,ye amendment long term sabke liye faydemand hoga,Negative
+Sonal Bhatia,Strong compliance framework establish kar raha hai.,2025-09-30,2,strong compliance framework establish kar raha,Positive
+Sonal Bhatia,Strong compliance framework establish kar raha hai.,2025-09-30,2,strong compliance framework establish kar raha,Positive
+Sameer Shah,Penalties have become more transparent than before.,2025-09-02,1,penalty become transparent,Neutral
+Nikita Rao,Digital updates kaafi acchi hain.,2025-09-06,1,digital update kaafi acchi hain,Neutral
+Ajay Singh,Amendment introduces new training modules.,2025-09-08,2,amendment introduces new training module,Positive
+Bhavna Patel,It would be great if feedback cycle is improved.,2025-09-10,2,would great feedback cycle improved,Positive
+Geeta Iyer,Legal clauses samajhne mein ab easy hai.,2025-09-14,2,legal clause samajhne ab easy,Positive
+Ritu Desai,Documentation ab zyada streamline ho gaya hai.,2025-09-16,1,documentation ab zyada streamline ho gaya,Neutral
+Neeraj Jain,Overall companies ke liye beneficial hai.,2025-09-18,1,overall company ke liye beneficial,Neutral
+Deepa Mehta,Government updates ko efficiently communicate kare.,2025-09-21,1,government update ko efficiently communicate kare,Neutral
+Pankaj Kumar,Acchi governance practices ko promote karega.,2025-09-22,1,acchi governance practice ko promote karega,Neutral
+Kiran Sharma,Startups ko zaroorat ke mutabik flexibility mil rahi hai.,2025-09-23,1,startup ko zaroorat ke mutabik flexibility mil rahi,Neutral
+Sunita Singh,Investor protection pe focus impressive hai.,2025-09-24,2,investor protection pe focus impressive,Positive
+Amit Arora,Compliance process aur efficient bana hai.,2025-09-25,1,compliance process efficient bana,Neutral
+Vaishali Gupta,Sabhi stakeholders ke feedback consider kiye gaye hain.,2025-09-26,1,sabhi stakeholder ke feedback consider kiye gaye hain,Neutral
+Rajesh Nair,Economic growth me iska bada yogdaan hoga.,2025-09-27,2,economic growth iska bada yogdaan hoga,Positive
+Meenakshi Pillai,Startups ke liye aur initiatives aayeinge.,2025-09-28,1,startup ke liye initiative aayeinge,Neutral
+Rahul Mehta,Enhanced transparency se trust build hoga.,2025-09-29,1,enhanced transparency se trust build hoga,Neutral
+Ananya Roy,Digital India initiative ko boost mila hai.,2025-09-30,1,digital india initiative ko boost mila,Neutral
+Shiv Kumar,Penalty regulations ab reasonable aur justified hain.,2025-09-01,2,penalty regulation ab reasonable justified hain,Positive
+Rina Gupta,Documentation requirements ab simplify ho gaye hain.,2025-09-02,1,documentation requirement ab simplify ho gaye hain,Neutral
+Siddharth Chatterjee,Policy reforms se operational ease badhega.,2025-09-03,1,policy reform se operational ease badhega,Neutral
+Harpreet Kaur,MSME sector ko iska fayda hoga.,2025-09-04,1,msme sector ko iska fayda hoga,Neutral
+Manoj Deshmukh,"Compliance mein innovation raha hai, acha lag raha hai.",2025-09-05,1,compliance innovation raha acha lag raha,Neutral
+Nidhi Joshi,Processes streamline karne par focus achha hai.,2025-09-06,1,process streamline karne focus achha,Neutral
+Arvind Singh,Ye amendment business ecosystems ke liye beneficial hai.,2025-09-07,1,ye amendment business ecosystem ke liye beneficial,Neutral
+Shruti Sharma,Saari directives clear hain aur follow karna easy hai.,2025-09-08,2,saari directive clear hain follow karna easy,Positive
+Kamalika Bose,Foundation strong hai is amendment ke liye.,2025-09-09,2,foundation strong amendment ke liye,Positive
+Rahul Bhattacharya,Implementation me thode challenges ho sakte hain.,2025-09-10,1,implementation thode challenge ho sakte hain,Neutral
+Bhavna Joshi,Stakeholders ki feedback ko value di gayi hai.,2025-09-11,1,stakeholder ki feedback ko value di gayi,Neutral
+Ravi Patel,Transparency aur compliance ko promote karta hai.,2025-09-12,1,transparency compliance ko promote karta,Neutral
+Pooja Singh,Helpful hai businesses ke liye yeh amendment.,2025-09-13,1,helpful business ke liye amendment,Neutral
+Suman Reddy,Sarkar ne practical changes implement kiye hain.,2025-09-14,1,sarkar ne practical change implement kiye hain,Neutral
+Jatin Chawla,Ab penalties justifiable aur fair hain.,2025-09-15,2,ab penalty justifiable fair hain,Positive
+Deepa Kohli,Business compliance mein convenience badhaya gaya hai.,2025-09-16,1,business compliance convenience badhaya gaya,Neutral
+Samir Desai,Amendment market ko strengthen karega.,2025-09-17,1,amendment market ko strengthen karega,Neutral
+Anjali Kapoor,Ab documentation easier aur clearer hai.,2025-09-18,1,ab documentation easier clearer,Neutral
+Pankaj Singh,Provisions comprehensive hain aur sab ko suit karte hain.,2025-09-19,1,provision comprehensive hain sab ko suit karte hain,Neutral
+Rina Reddy,Startup incentives ko dhyan mein rakha gaya hai.,2025-09-20,1,startup incentive ko dhyan rakha gaya,Neutral
+Sahil Grover,Digital compliance pe focus achha hai.,2025-09-21,1,digital compliance pe focus achha,Neutral

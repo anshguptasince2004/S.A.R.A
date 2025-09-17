@@ -3,41 +3,41 @@ import { motion } from "framer-motion";
 import { Avatar, Button, Menu, MenuItem, Pagination } from "@mui/material";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-/* ---------- SAMPLE DATA ---------- */
-const commentsData = [
-  {
-    id: 1,
-    name: "John D.",
-    date: "2024-05-10",
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80&auto=format&fit=crop",
-    text: "This amendment is a fantastic step forward for our economy. It promises to create jobs and stimulate growth where it's needed most. I fully support this initiative and believe it will bring significant benefits to our community. It's a well-thought-out plan for a brighter future.",
-  },
-  {
-    id: 2,
-    name: "Sarah K.",
-    date: "2024-05-10",
-    avatar:
-      "https://images.unsplash.com/photo-1545996124-6d6a7a7d0a9b?w=200&q=80&auto=format&fit=crop",
-    text: "I'm thrilled to see such a crucial amendment being passed. The focus on fairness and development is exactly what we need. This is a clear indication that our leaders are listening to the people. This will be a huge benefit for everyone.",
-  },
-  {
-    id: 3,
-    name: "Michael B.",
-    date: "2024-05-09",
-    avatar:
-      "https://images.unsplash.com/photo-1545996126-9d0b50f3f8c7?w=200&q=80&auto=format&fit=crop",
-    text: "Finally, a policy that supports small businesses and encourages local investment. This amendment is important for the future of our state's economy. I strongly believe this will lead to sustainable growth and prosperity.",
-  },
-  {
-    id: 4,
-    name: "Emily R.",
-    date: "2024-05-09",
-    avatar:
-      "https://images.unsplash.com/photo-1545996125-0a8f7b6f3f9f?w=200&q=80&auto=format&fit=crop",
-    text: "This is a major win for our community. The amendment addresses key issues and provides a clear path forward. It's a testament to what can be achieved when we work together. Excellent news!",
-  },
-];
+// /* ---------- SAMPLE DATA ---------- */
+// const commentsData = [
+//   {
+//     id: 1,
+//     name: "John D.",
+//     date: "2024-05-10",
+//     avatar:
+//       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80&auto=format&fit=crop",
+//     text: "This amendment is a fantastic step forward for our economy. It promises to create jobs and stimulate growth where it's needed most. I fully support this initiative and believe it will bring significant benefits to our community. It's a well-thought-out plan for a brighter future.",
+//   },
+//   {
+//     id: 2,
+//     name: "Sarah K.",
+//     date: "2024-05-10",
+//     avatar:
+//       "https://images.unsplash.com/photo-1545996124-6d6a7a7d0a9b?w=200&q=80&auto=format&fit=crop",
+//     text: "I'm thrilled to see such a crucial amendment being passed. The focus on fairness and development is exactly what we need. This is a clear indication that our leaders are listening to the people. This will be a huge benefit for everyone.",
+//   },
+//   {
+//     id: 3,
+//     name: "Michael B.",
+//     date: "2024-05-09",
+//     avatar:
+//       "https://images.unsplash.com/photo-1545996126-9d0b50f3f8c7?w=200&q=80&auto=format&fit=crop",
+//     text: "Finally, a policy that supports small businesses and encourages local investment. This amendment is important for the future of our state's economy. I strongly believe this will lead to sustainable growth and prosperity.",
+//   },
+//   {
+//     id: 4,
+//     name: "Emily R.",
+//     date: "2024-05-09",
+//     avatar:
+//       "https://images.unsplash.com/photo-1545996125-0a8f7b6f3f9f?w=200&q=80&auto=format&fit=crop",
+//     text: "This is a major win for our community. The amendment addresses key issues and provides a clear path forward. It's a testament to what can be achieved when we work together. Excellent news!",
+//   },
+// ];
 
 /* ---------- SMALL SUB-COMPONENTS ---------- */
 function Header({ total, sentiment }) {
@@ -85,7 +85,20 @@ function CommentCard({ c }) {
 
 /* ---------- MAIN DASHBOARD ---------- */
 export default function CommentsDashboard({ sentiment, data }) {
-  const [comments, setComments] = useState([]);
+  const comments = useMemo(() => {
+    if (!data || !Array.isArray(data)) return [];
+
+    if (sentiment === "positive") {
+      return data.filter((c) => c.label === "2" || c.label === 2);
+    }
+    if (sentiment === "negative") {
+      return data.filter((c) => c.label === "0" || c.label === 0);
+    }
+    if (sentiment === "neutral") {
+      return data.filter((c) => c.label === "1" || c.label === 1);
+    }
+    return [];
+  }, [data, sentiment]);
   const [anchorFilter, setAnchorFilter] = useState(null);
   const [anchorSort, setAnchorSort] = useState(null);
 
@@ -93,18 +106,13 @@ export default function CommentsDashboard({ sentiment, data }) {
 
   const pageSize = 4;
 
-  useEffect(() => {
-    setComments(commentsData);
-  }, []);
   const positiveComments = data.filter((c) => c.label === "2" || c.label === 2);
   const negativeComments = data.filter((c) => c.label === "0" || c.label === 0);
   const neutralComments = data.filter((c) => c.label === "1" || c.label === 1);
 
-  
 
-  const totalPages = useMemo(() => {
-    return Math.max(1, Math.ceil(comments.length / pageSize));
-  }, [comments.length]);
+
+  const totalPages = Math.max(1, Math.ceil(comments.length / pageSize));
 
   const visibleComments = useMemo(() => {
     const start = (page - 1) * pageSize;
