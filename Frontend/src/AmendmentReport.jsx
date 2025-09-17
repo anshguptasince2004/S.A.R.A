@@ -43,6 +43,7 @@ export default function AmendmentReport() {
   const [reportLoading, setReportLoading] = useState(false);
   const [error, setError] = useState(null);
   const [openPopup, setOpenPopup] = useState(null); // "positive" | "negative" | "neutral" | null
+  const [csvData,setCsvData] = useState({});
 
   useEffect(() => {
     const sendCsvToML = async () => {
@@ -75,6 +76,31 @@ export default function AmendmentReport() {
 
           setMlResult(data);
           console.log("The ML reports are ", data);
+           // ✅ Now fetch the CSV file and parse it
+        if (data.output_csv) {
+          try {
+            const csvRes = await fetch(`http://localhost:5000${data.output_csv}`);
+            if (!csvRes.ok) throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
+            const csvText = await csvRes.text();
+
+            // Convert CSV text to JSON (simple split by lines + commas)
+            const [headerLine, ...rows] = csvText.split("\n");
+            const headers = headerLine.split(",");
+            const jsonData = rows.map((row) => {
+              const values = row.split(",");
+              return headers.reduce((acc, header, idx) => {
+                acc[header] = values[idx];
+                return acc;
+              }, {});
+            });
+
+            setCsvData(jsonData);
+            console.log("CSV data parsed as JSON:", jsonData);
+          } catch (csvErr) {
+            console.error("Failed to parse CSV:", csvErr);
+          }
+        }
+      
         } else {
           const text = await res.text();
           throw new Error("Flask server did not return JSON: " + text);
@@ -90,6 +116,8 @@ export default function AmendmentReport() {
 
     sendCsvToML();
   }, [csvFile]);
+
+  console.log(csvData);
 
   // Derived values (null until data is ready)
   const positive = mlResult?.sentiment_counts?.positive ?? null;
@@ -457,7 +485,7 @@ export default function AmendmentReport() {
             className="bg-white rounded-xl shadow-2xl w-[95%] max-w-3xl h-[80vh] overflow-y-auto p-4 sm:p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <CommentsDashboard sentiment={openPopup} />
+            <CommentsDashboard sentiment={openPopup} data={csvData} />
           </motion.div>
 
         </motion.div>
