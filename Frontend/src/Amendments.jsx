@@ -55,6 +55,21 @@ export default function Amendments() {
   // const {amendments,setAmendments} = useState([])
 
   const [amendments, setAmendments] = useState([]);
+  const [verified,setVerified] = useState(JSON.parse(localStorage.getItem("savedResults")) || {})
+
+
+
+  useEffect(() => {
+  const updateVerified = () => {
+    const saved = JSON.parse(localStorage.getItem("savedResults")) || {};
+    setVerified(saved);
+  };
+
+  window.addEventListener("savedResultsUpdated", updateVerified);
+  updateVerified(); // run once immediately
+
+  return () => window.removeEventListener("savedResultsUpdated", updateVerified);
+}, []);
 
   const getAmends = async () => {
     try {
@@ -178,11 +193,18 @@ export default function Amendments() {
                         {item.title}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm">
-                        <span
+                        {item.mlData?.summaries?.neutral?.length===0?<span
+
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-200`}
                         >
-                          Not Verified
-                        </span>
+                         Not Verified
+                        </span>:<span
+
+                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-200`}
+                        >
+                         Verified
+                        </span>}
+                        
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
                         {item.mlData?.lastUpdated
@@ -198,6 +220,16 @@ export default function Amendments() {
 
                         </a>
                       </td>
+                      {item.mlData?.summaries?.neutral?.length!==0&&<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <a
+                          className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700"
+                          href="#"
+                        >
+                          <CommentUpload aId={item.aId} />
+
+                        </a>
+                      </td>}
+                      
                     </tr>
                   ))}
                 </tbody>

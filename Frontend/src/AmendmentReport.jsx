@@ -44,6 +44,7 @@ export default function AmendmentReport() {
   const [error, setError] = useState(null);
   const [openPopup, setOpenPopup] = useState(null); // "positive" | "negative" | "neutral" | null
   const [csvData, setCsvData] = useState({});
+  const savedResults = JSON.parse(localStorage.getItem("savedResults")) || {};
 
   useEffect(() => {
     const sendCsvToML = async () => {
@@ -79,8 +80,11 @@ export default function AmendmentReport() {
           // ✅ Now fetch the CSV file and parse it
           if (data.output_csv) {
             try {
-              const csvRes = await fetch(`http://localhost:5000${data.output_csv}`);
-              if (!csvRes.ok) throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
+              const csvRes = await fetch(
+                `http://localhost:5000${data.output_csv}`
+              );
+              if (!csvRes.ok)
+                throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
               const csvText = await csvRes.text();
 
               // Convert CSV text to JSON (simple split by lines + commas)
@@ -100,7 +104,6 @@ export default function AmendmentReport() {
               console.error("Failed to parse CSV:", csvErr);
             }
           }
-
         } else {
           const text = await res.text();
           throw new Error("Flask server did not return JSON: " + text);
@@ -134,10 +137,10 @@ export default function AmendmentReport() {
 
   const pieData = total
     ? [
-      { name: "Positive", value: positive, color: COLORS[0] },
-      { name: "Neutral", value: neutral, color: COLORS[1] },
-      { name: "Negative", value: negative, color: COLORS[2] },
-    ]
+        { name: "Positive", value: positive, color: COLORS[0] },
+        { name: "Neutral", value: neutral, color: COLORS[1] },
+        { name: "Negative", value: negative, color: COLORS[2] },
+      ]
     : [];
 
   const downloadPDF = async () => {
@@ -183,7 +186,6 @@ export default function AmendmentReport() {
     }
   };
 
-
   useEffect(() => {
     if (!mlResult) return;
 
@@ -212,9 +214,12 @@ export default function AmendmentReport() {
 
         const data = await res.json();
         console.log("✅ ML Result saved:", data);
+        // ✅ Update object and save back to localStorage
+        const updatedResults = { ...savedResults, [Id]: true };
+        localStorage.setItem("savedResults", JSON.stringify(updatedResults));
 
-        // Mark as saved
-        localStorage.setItem(savedKey, "true");
+        // 🔔 notify only this React app
+        window.dispatchEvent(new Event("savedResultsUpdated"));
       } catch (err) {
         console.error("❌ Failed to save ML result:", err);
       }
@@ -503,7 +508,6 @@ export default function AmendmentReport() {
           >
             <CommentsDashboard sentiment={openPopup} data={csvData} />
           </motion.div>
-
         </motion.div>
       )}
     </div>
