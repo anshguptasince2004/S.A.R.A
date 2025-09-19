@@ -34,23 +34,54 @@ function StatCard({ title, value, valueColor, isLoading, onClick }) {
 }
 
 export default function AmendmentReport() {
-  const reportRef = useRef();
+   const reportRef = useRef();
   const location = useLocation();
-  const csvFile = location.state?.csvFile;
   const Id = localStorage.getItem("aId") || "Amend126";
-  console.log("The Id is ", Id);
 
-  const [mlResult, setMlResult] = useState(null); // null means no data yet
-  const [reportLoading, setReportLoading] = useState(false);
+  // --- 1. STATE MANAGEMENT (CHANGED) ---
+  // Store the file in state. This is the key to fixing the timing issue.
+  const [csvFile, setCsvFile] = useState(null); 
+  const [mlResult, setMlResult] = useState(null);
+  const [reportLoading, setReportLoading] = useState(true); // Start loading immediately
   const [error, setError] = useState(null);
-  const [openPopup, setOpenPopup] = useState(null); // "positive" | "negative" | "neutral" | null
+  const [openPopup, setOpenPopup] = useState(null);
   const [csvData, setCsvData] = useState({});
-  const savedResults = JSON.parse(localStorage.getItem("savedResults")) || {};
-  const {user} = useSelector((state)=>state.auth)
+  const { user } = useSelector((state) => state.auth);
+  const [max,setMax] = useState("");
 
+  // --- 2. FILE LOADING EFFECT (NEW) ---
+  // This effect runs ONCE on component mount to find and set the CSV file.
+  useEffect(() => {
+    let fileToLoad = location.state?.csvFile;
+
+    // If file is not in state (e.g., page refresh), reconstruct from localStorage
+    if (!fileToLoad) {
+      const fileContent = localStorage.getItem("csvFileContent");
+      const fileName = localStorage.getItem("csvFileName");
+      const fileType = localStorage.getItem("csvFileType");
+
+      if (fileContent && fileName && fileType) {
+        fileToLoad = new File([fileContent], fileName, { type: fileType });
+        console.log("CSV file reconstructed from localStorage.");
+      }
+    }
+
+    if (fileToLoad) {
+      setCsvFile(fileToLoad); // Set the file into state
+    } else {
+      setError("No CSV file found to analyze."); // Handle case where no file is available
+      setReportLoading(false);
+    }
+  }, [location.state]); // Reruns if navigation state changes
+
+  // --- 3. API CALL EFFECT (MODIFIED) ---
+  // This effect now DEPENDS on the `csvFile` state. It will only run
+  // AFTER the above effect has successfully set the file.
   useEffect(() => {
     const sendCsvToML = async () => {
-      if (!csvFile) return;
+      // Guard clause: Do nothing if the file isn't ready yet.
+      if (!csvFile) return; 
+
       setReportLoading(true);
       setError(null);
 
@@ -68,44 +99,13 @@ export default function AmendmentReport() {
           throw new Error(`Server responded with ${res.status}`);
         }
 
+        // ... THE REST OF YOUR API LOGIC IS THE SAME ...
         const contentType = res.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
           const data = await res.json();
-
-          if (data.error) {
-            // backend sent an error JSON
-            throw new Error(data.error);
-          }
-
+          if (data.error) throw new Error(data.error);
           setMlResult(data);
-          console.log("The ML reports are ", data);
-          // ✅ Now fetch the CSV file and parse it
-          if (data.output_csv) {
-            try {
-              const csvRes = await fetch(
-                `http://localhost:5000${data.output_csv}`
-              );
-              if (!csvRes.ok)
-                throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
-              const csvText = await csvRes.text();
-
-              // Convert CSV text to JSON (simple split by lines + commas)
-              const [headerLine, ...rows] = csvText.split("\n");
-              const headers = headerLine.split(",");
-              const jsonData = rows.map((row) => {
-                const values = row.split(",");
-                return headers.reduce((acc, header, idx) => {
-                  acc[header] = values[idx];
-                  return acc;
-                }, {});
-              });
-
-              setCsvData(jsonData);
-              console.log("CSV data parsed as JSON:", jsonData);
-            } catch (csvErr) {
-              console.error("Failed to parse CSV:", csvErr);
-            }
-          }
+          // ... etc. ...
         } else {
           const text = await res.text();
           throw new Error("Flask server did not return JSON: " + text);
@@ -120,7 +120,7 @@ export default function AmendmentReport() {
     };
 
     sendCsvToML();
-  }, [csvFile]);
+  }, [csvFile, Id]); // Now depends on the STATE variable
 
   console.log(csvData);
 
@@ -136,6 +136,84 @@ export default function AmendmentReport() {
   const Pp = total ? ((positive / total) * 100).toFixed(2) : null;
   const Np = total ? ((negative / total) * 100).toFixed(2) : null;
   const Nup = total ? ((neutral / total) * 100).toFixed(2) : null;
+// --- 3. API CALL EFFECT (MODIFIED) ---
+useEffect(() => {
+  const sendCsvToML = async () => {
+    if (!csvFile) return;
+
+    setReportLoading(true);
+    setError(null);
+
+    const formData = new FormData();
+    formData.append("file", csvFile);
+    formData.append("amendmentId", Id);
+
+    try {
+      const res = await fetch("http://localhost:3000/api/ml/analyze", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server responded with ${res.status}`);
+      }
+
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+
+        setMlResult(data);
+        console.log("The ML reports are ", data);
+
+        // --- START: THIS IS THE NEW AND IMPORTANT PART ---
+        // After getting ML results, fetch and parse the processed CSV
+        if (data.output_csv) {
+          try {
+            // NOTE: Assuming your ML service runs on port 5000
+            const csvRes = await fetch(`http://localhost:5000${data.output_csv}`);
+            if (!csvRes.ok) throw new Error(`Failed to fetch CSV: ${csvRes.status}`);
+            
+            const csvText = await csvRes.text();
+
+            // Simple CSV to JSON parser
+            const rows = csvText.trim().split('\n');
+            const header = rows.shift().split(',');
+            
+            const jsonData = rows.map(row => {
+              const values = row.split(',');
+              return header.reduce((object, key, index) => {
+                object[key.trim()] = values[index].trim();
+                return object;
+              }, {});
+            });
+
+            // Set the parsed data into state for the popup to use
+            setCsvData(jsonData);
+            console.log("Parsed CSV data for popup:", jsonData);
+
+          } catch (csvError) {
+            console.error("Failed to fetch or parse the processed CSV:", csvError);
+            setError("Could not load comment details.");
+          }
+        }
+        // --- END OF NEW PART ---
+
+      } else {
+        const text = await res.text();
+        throw new Error("API did not return JSON: " + text);
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError(err.message);
+      setMlResult(null);
+    } finally {
+      setReportLoading(false);
+    }
+  };
+
+  sendCsvToML();
+}, [csvFile, Id]);
 
   const pieData = total
     ? [
@@ -217,11 +295,7 @@ export default function AmendmentReport() {
         const data = await res.json();
         console.log("✅ ML Result saved:", data);
         // ✅ Update object and save back to localStorage
-        const updatedResults = { ...savedResults, [Id]: true };
-        localStorage.setItem("savedResults", JSON.stringify(updatedResults));
-
-        // 🔔 notify only this React app
-        window.dispatchEvent(new Event("savedResultsUpdated"));
+       
       } catch (err) {
         console.error("❌ Failed to save ML result:", err);
       }
@@ -250,7 +324,7 @@ export default function AmendmentReport() {
           >
             Download PDF
           </Button>
-           {user.profilePic.length > 0 ? (
+          {user.profilePic.length > 0 ? (
             <Avatar
               alt="Travis Howard"
               sx={{ fontSize: "large" }}
@@ -399,7 +473,7 @@ export default function AmendmentReport() {
                     <>
                       The dominant sentiment for Amendment 3 is{" "}
                       <strong className="text-blue-600">
-                        Overwhelmingly Positive
+                        Overwhelmingly {max}
                       </strong>
                       , with a significant majority of feedback expressing
                       support. This suggests strong public approval.

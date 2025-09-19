@@ -99,6 +99,7 @@ export default function CommentsDashboard({ sentiment, data }) {
     }
     return [];
   }, [data, sentiment]);
+  console.log("The data is ",data)
   const [anchorFilter, setAnchorFilter] = useState(null);
   const [anchorSort, setAnchorSort] = useState(null);
 
