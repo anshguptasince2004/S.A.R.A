@@ -4,13 +4,15 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { PictureAsPdf } from "@mui/icons-material";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import React, { useEffect, useRef, useState } from "react";
-import * as htmlToImage from "html-to-image";
-import jsPDF from "jspdf";
 import { useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import CommentsDashboard from "./components/PopUp";
 import { useSelector } from "react-redux";
 const COLORS = ["#3b82f6", "#94a3b8", "#ef4444"];
+import { Quantum } from "ldrs/react";
+import "ldrs/react/Quantum.css";
+import CountUp from "react-countup";
+
 
 function StatCard({ title, value, valueColor, isLoading, onClick }) {
   return (
@@ -24,7 +26,7 @@ function StatCard({ title, value, valueColor, isLoading, onClick }) {
         {isLoading ? (
           <CircularProgress size={24} color="inherit" />
         ) : value !== null ? (
-          value.toLocaleString()
+          <CountUp start={0} end={value} duration={1.2} separator="," />
         ) : (
           "--"
         )}
@@ -48,6 +50,27 @@ export default function AmendmentReport() {
   const [csvData, setCsvData] = useState([]);
   const { user } = useSelector((state) => state.auth);
   const [max, setMax] = useState("");
+  const [loaderText, setLoaderText] = useState("Analysing comments with S.A.R.A...");
+
+
+  useEffect(() => {
+    if (reportLoading) {
+      const messages = [
+        "Analysing comments with S.A.R.A...",
+        "Generating report..."
+      ];
+      let idx = 0;
+
+      const interval = setInterval(() => {
+        idx = (idx + 1) % messages.length;
+        setLoaderText(messages[idx]);
+      }, 4000); // every 4s switch message
+
+      return () => clearInterval(interval);
+    }
+  }, [reportLoading]);
+
+
 
   // --- 2. FILE LOADING EFFECT (NEW) ---
   // This effect runs ONCE on component mount to find and set the CSV file.
@@ -198,10 +221,10 @@ export default function AmendmentReport() {
 
   const pieData = total
     ? [
-        { name: "Positive", value: positive, color: COLORS[0] },
-        { name: "Neutral", value: neutral, color: COLORS[1] },
-        { name: "Negative", value: negative, color: COLORS[2] },
-      ]
+      { name: "Positive", value: positive, color: COLORS[0] },
+      { name: "Neutral", value: neutral, color: COLORS[1] },
+      { name: "Negative", value: negative, color: COLORS[2] },
+    ]
     : [];
 
   const downloadPDF = async () => {
@@ -250,7 +273,7 @@ export default function AmendmentReport() {
   useEffect(() => {
     if (!mlResult) return;
 
-   
+
 
     const saveResultToDB = async () => {
       try {
@@ -283,6 +306,15 @@ export default function AmendmentReport() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50" ref={reportRef}>
+
+      {reportLoading && (
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white">
+          <Quantum size="80" speed="1.95" color="#3b82f6" />
+          <p className="mt-6 text-lg font-semibold text-gray-700">{loaderText}</p>
+        </div>
+      )}
+
+
       <header className="flex items-center justify-between h-20 px-10 border-b border-gray-200 bg-white shadow-sm">
         <h1 className="text-2xl font-bold text-gray-900">
           Amendment 3 Analysis
@@ -481,9 +513,10 @@ export default function AmendmentReport() {
                 ) : mlResult?.wordclouds ? (
                   <>
                     <div className="my-5">
-                      <h2 className="text-bold text-xl underline my-3">
+                      <h2 className="text-lg font-semibold border-l-4 border-green-500 pl-2">
                         Positive Cloud
                       </h2>
+
                       <img
                         src={`http://localhost:5000${mlResult.wordclouds.positive?.url.replace(
                           "#",
@@ -493,7 +526,7 @@ export default function AmendmentReport() {
                       />
                     </div>
                     <div className="my-4">
-                      <h2 className="text-bold text-xl underline">
+                      <h2 className="text-lg font-semibold border-l-4 border-red-500 pl-2">
                         Negative Cloud
                       </h2>
                       <img
@@ -505,7 +538,7 @@ export default function AmendmentReport() {
                       />
                     </div>
                     <div className="my-4">
-                      <h2 className="text-bold text-xl underline">
+                      <h2 className="text-lg font-semibold border-l-4 border-slate-500 pl-2">
                         Neutral Cloud
                       </h2>
                       <img
