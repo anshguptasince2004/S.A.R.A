@@ -88,6 +88,7 @@ export default function Amendments() {
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
       const data = await result.json();
+      console.log("The ml result is ",result);
       return data;
     } catch (e) {
       console.log(e);
@@ -97,7 +98,7 @@ export default function Amendments() {
   const downloadPDF = async (title, aId) => {
     try {
       const mlResult = await getMlResults(aId);
-      // console.log(mlResult); // <-- await here
+       // <-- await here
       if (!mlResult) {
         console.error("No ML result available for PDF");
         return;
@@ -301,6 +302,7 @@ export default function Amendments() {
           </td>
 
           {/* Actions Column */}
+          
           <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex gap-2 justify-end">
             <CommentUpload aId={item.aId} />
             <button

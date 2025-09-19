@@ -47,7 +47,7 @@ const getAmend = async (req, res) => {
 
 const saveMLResult = async(req,res)=>{
   const {aId} = req.params;
-  const mlResult = req.body;
+  const  mlResult = req.body;
 
   try{
     await connectDB();

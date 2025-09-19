@@ -2,11 +2,11 @@ from flask import Flask, request, jsonify, send_from_directory, send_file
 import os
 import shutil
 from werkzeug.utils import secure_filename
-from inference import run_inference
+from inference import run_inference   # 👈 must exist in your inference.py
 import base64
 import pandas as pd
-from flask_cors import CORS, cross_origin
-from pdf_generator import generate_report_pdf
+from flask_cors import CORS
+from pdf_generator import generate_report_pdf   # 👈 must exist in pdf_generator.py
 
 # ---------------- Configuration ----------------
 UPLOAD_FOLDER = "uploads"
@@ -25,29 +25,6 @@ app.config["OUTPUT_FOLDER"] = OUTPUT_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-@app.route("/generate-pdf", methods=["POST"])
-def generate_pdf():
-    try:
-        data = request.json
-        amendment_id = data.get("amendmentId")
-        amendment_title = data.get("amendmentTitle", "Untitled Amendment")
-        counts = data.get("counts", {})
-        percentages = data.get("percentages", {})
-        keywords = data.get("keywords", [])
-        summaries = data.get("summaries", {})
-        
-
-        file_path = generate_report_pdf(amendment_id, amendment_title, counts, percentages, keywords, summaries)
-
-        # --- Optional: store PDF to DB ---
-        # with open(file_path, "rb") as f:
-        #     pdf_bytes = f.read()
-        #     # save pdf_bytes in MongoDB or another DB
-
-        return send_file(file_path, as_attachment=True)
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 # ---------------- Utility Functions ----------------
 def allowed_file(filename):
@@ -76,87 +53,23 @@ def encode_image_to_base64(image_path):
 
 
 # ---------------- Routes ----------------
-# @app.route("/outputs/<filename>")
-# def download_output(filename):
-#     """Serve output files (CSV, wordclouds) directly."""
-#     return send_from_directory(app.config["OUTPUT_FOLDER"], filename)
-
-
-# @app.route("/analyze", methods=["POST"])
-# def analyze():
+@app.route("/generate-pdf", methods=["POST"])
+def generate_pdf():
     try:
-        if "file" not in request.files:
-            return jsonify({"error": "No file part in the request"}), 400
+        data = request.json
+        amendment_id = data.get("amendmentId")
+        amendment_title = data.get("amendmentTitle", "Untitled Amendment")
+        counts = data.get("counts", {})
+        percentages = data.get("percentages", {})
+        keywords = data.get("keywords", [])
+        summaries = data.get("summaries", {})
 
-        file = request.files["file"]
-        if file.filename == "":
-            return jsonify({"error": "No file selected"}), 400
+        file_path = generate_report_pdf(amendment_id, amendment_title, counts, percentages, keywords, summaries)
 
-        if not allowed_file(file.filename):
-            return jsonify({"error": "Only CSV files are allowed"}), 400
-
-        # Clear old files
-        clear_folder(app.config["UPLOAD_FOLDER"])
-        clear_folder(app.config["OUTPUT_FOLDER"])
-
-        # Save uploaded CSV
-        filename = secure_filename(file.filename)
-        input_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        file.save(input_path)
-
-        # Prepare output CSV path
-        output_filename = f"predicted_{filename}"
-        output_path = os.path.join(app.config["OUTPUT_FOLDER"], output_filename)
-
-        # Run inference (from inference.py)
-        summaries = run_inference(input_path, output_path)
-
-        # Load labeled CSV
-        if not os.path.exists(output_path):
-            return jsonify({"error": "Output CSV was not generated"}), 500
-
-        df = pd.read_csv(output_path)
-        if "label" not in df.columns:
-            return jsonify({"error": "Output CSV missing 'label' column"}), 500
-
-        counts = df["label"].value_counts().to_dict()
-        counts_dict = {
-            "negative": counts.get(0, 0),
-            "neutral": counts.get(1, 0),
-            "positive": counts.get(2, 0)
-        }
-
-        # WordCloud file paths
-        negative_wc = os.path.join(app.config["OUTPUT_FOLDER"], "negative_wc.png")
-        neutral_wc = os.path.join(app.config["OUTPUT_FOLDER"], "neutral_wc.png")
-        positive_wc = os.path.join(app.config["OUTPUT_FOLDER"], "positive_wc.png")
-
-        wordclouds = {
-            "negative": {
-                "base64": encode_image_to_base64(negative_wc),
-                "url": f"/outputs/negative_wc.png"
-            },
-            "neutral": {
-                "base64": encode_image_to_base64(neutral_wc),
-                "url": f"/outputs/neutral_wc.png"
-            },
-            "positive": {
-                "base64": encode_image_to_base64(positive_wc),
-                "url": f"/outputs/positive_wc.png"
-            }
-        }
-
-        response = {
-            "sentiment_counts": counts_dict,
-            "summaries": summaries,
-            "wordclouds": wordclouds,
-            "output_csv": f"/outputs/{output_filename}"  # direct link to CSV
-        }
-
-        return jsonify(response)
+        return send_file(file_path, as_attachment=True)
 
     except Exception as e:
-        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/analyze", methods=["POST"])
@@ -166,7 +79,7 @@ def analyze():
             return jsonify({"error": "No file part in the request"}), 400
 
         file = request.files["file"]
-        amendment_id = request.form.get("amendmentId")  # 👈 get amendmentId
+        amendment_id = request.form.get("amendmentId")  # 👈 frontend must send this
         if not amendment_id:
             return jsonify({"error": "Missing amendmentId"}), 400
 
@@ -182,7 +95,7 @@ def analyze():
         os.makedirs(amendment_upload_folder, exist_ok=True)
         os.makedirs(amendment_output_folder, exist_ok=True)
 
-        # Clear only that amendment’s folders
+        # Clear old data in that amendment’s folders
         clear_folder(amendment_upload_folder)
         clear_folder(amendment_output_folder)
 
@@ -198,7 +111,7 @@ def analyze():
         # Run inference
         summaries = run_inference(input_path, output_path)
 
-        # Load labeled CSV
+        # Validate output
         if not os.path.exists(output_path):
             return jsonify({"error": "Output CSV was not generated"}), 500
 
@@ -213,7 +126,7 @@ def analyze():
             "positive": counts.get(2, 0)
         }
 
-        # WordCloud paths
+        # WordCloud URLs
         wordclouds = {
             "negative": {"url": f"/outputs/{amendment_id}/negative_wc.png"},
             "neutral":  {"url": f"/outputs/{amendment_id}/neutral_wc.png"},
@@ -242,5 +155,4 @@ def download_output(amendment_id, filename):
 
 # ---------------- Run App ----------------
 if __name__ == "__main__":
-    # host=0.0.0.0 lets frontend reach backend if needed
     app.run(host="0.0.0.0", port=5000, debug=False)
