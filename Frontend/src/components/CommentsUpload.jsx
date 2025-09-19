@@ -104,7 +104,7 @@ export default function CommentUpload({ aId }) {
     <div className="flex items-center space-x-2">
       <Toaster position="top-center" reverseOrder={false} />
       {!open ? (
-        <label className="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+        <label className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">
           Upload comments
           <input
             type="file"
@@ -117,15 +117,15 @@ export default function CommentUpload({ aId }) {
         <div className="flex items-center gap-1">
           <button
             onClick={handleReset}
-            className="text-red-500 hover:text-red-700 flex items-center"
+            className="text-red-500 hover:text-red-700 flex items-center bg-red-100 hover:bg-red-200 px-2 py-2 rounded-md"
           >
             <CloseIcon fontSize="small" />
           </button>
           <button
-            className="text-blue-600 cursor-pointer hover:underline flex items-center gap-1"
+            className="px-3 py-2 rounded-md text-sm font-medium bg-blue-100 text-blue-900 hover:bg-blue-200"
             onClick={handleUploadAndNavigate}
           >
-            View Comments <ArrowForward fontSize="small" />
+            View Comments
           </button>
         </div>
       )}

@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowForward, Add, Notifications } from "@mui/icons-material";
+import { Notifications } from "@mui/icons-material";
 import CommentUpload from "./components/CommentsUpload";
 import CommentsPage from "./CommentsPage";
 import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
-
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -13,43 +13,6 @@ import toast from "react-hot-toast";
 import CircularProgress from "@mui/material/CircularProgress"; // Material-UI loader
 import Box from "@mui/material/Box"; // For centering
 
-const amendments = [
-  {
-    id: "#2024-001",
-    title: "Amendment to the Public Health Act",
-    status: "Pending Review",
-    color: "bg-yellow-100 text-yellow-800",
-    date: "2024-07-26",
-  },
-  {
-    id: "#2024-002",
-    title: "Amendment to the Education Reform Bill",
-    status: "Approved",
-    color: "bg-green-100 text-green-800",
-    date: "2024-07-20",
-  },
-  {
-    id: "#2024-003",
-    title: "Amendment to the Environmental Protection Law",
-    status: "Rejected",
-    color: "bg-red-100 text-red-800",
-    date: "2024-07-15",
-  },
-  {
-    id: "#2024-004",
-    title: "Amendment to the Transportation Infrastructure Plan",
-    status: "Pending Review",
-    color: "bg-yellow-100 text-yellow-800",
-    date: "2024-07-10",
-  },
-  {
-    id: "#2024-005",
-    title: "Amendment to the Social Welfare Program",
-    status: "Approved",
-    color: "bg-green-100 text-green-800",
-    date: "2024-07-05",
-  },
-];
 
 export default function Amendments() {
   const navigate = useNavigate();
@@ -88,7 +51,7 @@ export default function Amendments() {
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
       const data = await result.json();
-      console.log("The ml result is ",result);
+      console.log("The ml result is ", result);
       return data;
     } catch (e) {
       console.log(e);
@@ -98,7 +61,7 @@ export default function Amendments() {
   const downloadPDF = async (title, aId) => {
     try {
       const mlResult = await getMlResults(aId);
-       // <-- await here
+      // <-- await here
       if (!mlResult) {
         console.error("No ML result available for PDF");
         return;
@@ -219,10 +182,15 @@ export default function Amendments() {
                 Review and manage proposed amendments.
               </p>
             </div>
-            <button className="inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-blue-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:to-indigo-600 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-blue-500">
-              <Add fontSize="small" />
-              <span>New Amendment</span>
-            </button>
+            <a
+              href="https://www.mca.gov.in/content/mca/global/en/home.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-blue-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:to-indigo-600 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+            >
+              <OpenInNewIcon fontSize="small" />
+              <span>Go to MCA Portal</span>
+            </a>
           </div>
 
           <motion.div
@@ -244,80 +212,84 @@ export default function Amendments() {
               </Box>
             ) : (
               // Table Section
-           <div className="overflow-x-auto">
-  <table className="min-w-full divide-y divide-slate-200">
-    {/* Table Head */}
-    <thead className="bg-slate-100">
-      <tr>
-        <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-600 sm:pl-6">
-          Amendment ID
-        </th>
-        <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-          Title
-        </th>
-        <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-          Status
-        </th>
-        <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-          Date Submitted
-        </th>
-        <th className="relative py-3.5 pl-3 pr-4 font-semibold sm:pr-6 text-center text-slate-600">
-          Actions
-        </th>
-      </tr>
-    </thead>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-slate-200">
+                  {/* Table Head */}
+                  <thead className="bg-slate-100">
+                    <tr>
+                      <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-600 sm:pl-6">
+                        Amendment ID
+                      </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+                        Title
+                      </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+                        Status
+                      </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+                        Date Submitted
+                      </th>
+                      <th className="relative py-3.5 pl-3 pr-4 font-semibold sm:pr-6 text-center text-slate-600">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
 
-    {/* Table Body */}
-    <tbody className="divide-y divide-slate-200 bg-white">
-      {amendments.map((item, index) => (
-        <tr key={index} className="hover:bg-slate-50">
-          {/* Amendment ID */}
-          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-500 sm:pl-6">
-            {item.aId}
-          </td>
+                  {/* Table Body */}
+                  <tbody className="divide-y divide-slate-200 bg-white">
+                    {amendments.map((item, index) => (
+                      <tr key={index} className="hover:bg-slate-50">
+                        {/* Amendment ID */}
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-500 sm:pl-6">
+                          {item.aId}
+                        </td>
 
-          {/* Title */}
-          <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-900">
-            {item.title}
-          </td>
+                        {/* Title */}
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-900">
+                          {item.title}
+                        </td>
 
-          {/* Status */}
-          <td className="whitespace-nowrap px-3 py-4 text-sm">
-            {item.mlData?.summaries?.neutral?.length === 0 ? (
-              <span className="inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-medium bg-yellow-200">
-                Not Reviewed
-              </span>
-            ) : (
-              <span className="inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-medium bg-green-200">
-                Reviewed
-              </span>
-            )}
-          </td>
+                        {/* Status */}
+                        <td className="whitespace-nowrap px-3 py-4 text-sm">
+                          {item.mlData?.summaries?.neutral?.length === 0 ? (
+                            <span className="inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-medium bg-yellow-200">
+                              Not Reviewed
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-medium bg-green-200">
+                              Reviewed
+                            </span>
+                          )}
+                        </td>
 
-          {/* Date Submitted */}
-          <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-            {item.mlData?.lastUpdated
-              ? new Date(item.mlData.lastUpdated).toLocaleString()
-              : "N/A"}
-          </td>
+                        {/* Date Submitted */}
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                          {item.mlData?.lastUpdated
+                            ? new Date(item.mlData.lastUpdated).toLocaleString()
+                            : "N/A"}
+                        </td>
 
-          {/* Actions Column */}
-          
-          <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex gap-2 justify-end">
-            <CommentUpload aId={item.aId} />
-            <button
-              onClick={() => downloadPDF(item.title, item.aId)}
-              className="inline-flex items-center gap-1.5 w-fit p-2 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-lg hover:from-blue-600 hover:via-blue-700 hover:to-blue-900
-             rounded-lg transition-all"
-            >
-              See Pdf
-            </button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+                        {/* Actions Column */}
+
+                        <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex gap-2 justify-end">
+                          <CommentUpload aId={item.aId} />
+                          <button
+                            onClick={() => downloadPDF(item.title, item.aId)}
+                            disabled={item.mlData?.summaries?.neutral?.length === 0}
+                            className={`inline-flex items-center gap-1.5 w-fit p-2 rounded-lg transition-all 
+      ${item.mlData?.summaries?.neutral?.length === 0
+                                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                : "bg-blue-500 hover:bg-blue-600 text-white"}`
+                            }
+                          >
+                            Download Report
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
             )}
 
@@ -353,3 +325,8 @@ export default function Amendments() {
     </div>
   );
 }
+
+
+
+
+
