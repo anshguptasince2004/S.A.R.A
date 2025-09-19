@@ -136,32 +136,36 @@ function CommentsTable() {
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-blue-50/70">
+          <thead className="text-xs text-gray-700 uppercase bg-blue-100/70">
             <tr>
               <th className="px-6 py-3">Serial No.</th>
               <th className="px-6 py-3 min-w-[300px]">Comment</th>
               <th className="px-6 py-3">Date</th>
             </tr>
           </thead>
-          <tbody>
-            {reduced.map((c, index) => (
-              <tr
-                key={index}
-                className="bg-white/50 border-b border-gray-200/80 hover:bg-gray-50/70"
-              >
-                <td className="px-6 py-4 font-medium text-gray-900">
-                  {index + 1}
-                </td>
-                <td className="px-6 py-4">
-                  <div>{c.Comment}</div>
-                  <div className="text-xs text-gray-800 mt-1 font-bold">
-                    by {c.Author}
-                  </div>
-                </td>
-                <td className="px-6 py-4">{c.Date}</td>
-              </tr>
-            ))}
-          </tbody>
+        <tbody>
+  {reduced.map((c, index) => (
+    <tr
+      key={index}
+      className={`border-b border-gray-200/80 hover:bg-gray-50/70 ${
+        index % 2 === 1 ? "bg-blue-50/70" : "bg-white/50"
+      }`}
+    >
+      <td className="px-6 py-4 font-medium text-gray-900">
+        {index + 1}
+      </td>
+      <td className="px-6 py-4">
+        <div>{c.Comment}</div>
+        <div className="text-xs text-gray-800 mt-1 font-bold">
+          by {c.Author}
+        </div>
+      </td>
+      <td className="px-6 py-4">{c.Date}</td>
+    </tr>
+  ))}
+</tbody>
+
+
         </table>
       </div>
 
