@@ -243,77 +243,80 @@ export default function Amendments() {
               </Box>
             ) : (
               // Table Section
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-200">
-                  <thead className="bg-slate-100">
-                    <tr>
-                      <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-600 sm:pl-6">
-                        Amendment ID
-                      </th>
-                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-                        Title
-                      </th>
-                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-                        Status
-                      </th>
-                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-                        Date Submitted
-                      </th>
-                      <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                        <span className="sr-only">Action</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-200 bg-white">
-                    {amendments.map((item, index) => (
-                      <tr key={index} className="hover:bg-slate-50">
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-500 sm:pl-6">
-                          {item.aId}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-900">
-                          {item.title}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm">
-                          {item.mlData?.summaries?.neutral?.length === 0 ? (
-                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-200">
-                              Not Verified
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-200">
-                              Verified
-                            </span>
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                          {item.mlData?.lastUpdated
-                            ? new Date(item.mlData.lastUpdated).toLocaleString()
-                            : "N/A"}
-                        </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a
-                            className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700"
-                            href="#"
-                          >
-                            <CommentUpload aId={item.aId} />
-                          </a>
-                        </td>
-                        {(item.mlData?.summaries?.neutral?.length > 0 ||
-                          item.mlData?.summaries?.positive?.length > 0 ||
-                          item.mlData?.summaries?.negative?.length > 0) && (
-                          <td>
-                            <button
-                              onClick={() => downloadPDF(item.title, item.aId)}
-                              className="inline-flex items-center gap-1.5 w-fit p-2 text-slate-600 bg-gray-100 rounded-lg"
-                            >
-                              See Pdf
-                            </button>
-                          </td>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+           <div className="overflow-x-auto">
+  <table className="min-w-full divide-y divide-slate-200">
+    {/* Table Head */}
+    <thead className="bg-slate-100">
+      <tr>
+        <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-600 sm:pl-6">
+          Amendment ID
+        </th>
+        <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+          Title
+        </th>
+        <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+          Status
+        </th>
+        <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+          Date Submitted
+        </th>
+        <th className="relative py-3.5 pl-3 pr-4 font-semibold sm:pr-6 text-center text-slate-600">
+          Actions
+        </th>
+      </tr>
+    </thead>
+
+    {/* Table Body */}
+    <tbody className="divide-y divide-slate-200 bg-white">
+      {amendments.map((item, index) => (
+        <tr key={index} className="hover:bg-slate-50">
+          {/* Amendment ID */}
+          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-500 sm:pl-6">
+            {item.aId}
+          </td>
+
+          {/* Title */}
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-900">
+            {item.title}
+          </td>
+
+          {/* Status */}
+          <td className="whitespace-nowrap px-3 py-4 text-sm">
+            {item.mlData?.summaries?.neutral?.length === 0 ? (
+              <span className="inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-medium bg-yellow-200">
+                Not Reviewed
+              </span>
+            ) : (
+              <span className="inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-medium bg-green-200">
+                Reviewed
+              </span>
+            )}
+          </td>
+
+          {/* Date Submitted */}
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+            {item.mlData?.lastUpdated
+              ? new Date(item.mlData.lastUpdated).toLocaleString()
+              : "N/A"}
+          </td>
+
+          {/* Actions Column */}
+          <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex gap-2 justify-end">
+            <CommentUpload aId={item.aId} />
+            <button
+              onClick={() => downloadPDF(item.title, item.aId)}
+              className="inline-flex items-center gap-1.5 w-fit p-2 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-lg hover:from-blue-600 hover:via-blue-700 hover:to-blue-900
+             rounded-lg transition-all"
+            >
+              See Pdf
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
             )}
 
             <nav
@@ -330,13 +333,13 @@ export default function Amendments() {
               <div className="flex flex-1 justify-between sm:justify-end">
                 <a
                   href="#"
-                  className="relative inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                  className="relative inline-flex items-center rounded-md border  border-blue-500 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
                   Previous
                 </a>
                 <a
                   href="#"
-                  className="relative ml-3 inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                  className="relative ml-3 inline-flex items-center rounded-md border  border-blue-500 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
                 >
                   Next
                 </a>
