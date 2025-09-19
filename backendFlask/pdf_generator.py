@@ -51,3 +51,4 @@ def generate_report_pdf(amendment_id, amendment_title, counts, percentages, keyw
 
     doc.build(elements)
     return file_path
+

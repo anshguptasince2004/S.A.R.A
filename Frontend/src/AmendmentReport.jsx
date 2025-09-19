@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Avatar, Button } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { PictureAsPdf } from "@mui/icons-material";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import React, { useEffect, useRef, useState } from "react";
@@ -8,7 +9,7 @@ import jsPDF from "jspdf";
 import { useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import CommentsDashboard from "./components/PopUp";
-
+import { useSelector } from "react-redux";
 const COLORS = ["#3b82f6", "#94a3b8", "#ef4444"];
 
 function StatCard({ title, value, valueColor, isLoading, onClick }) {
@@ -45,6 +46,7 @@ export default function AmendmentReport() {
   const [openPopup, setOpenPopup] = useState(null); // "positive" | "negative" | "neutral" | null
   const [csvData, setCsvData] = useState({});
   const savedResults = JSON.parse(localStorage.getItem("savedResults")) || {};
+  const {user} = useSelector((state)=>state.auth)
 
   useEffect(() => {
     const sendCsvToML = async () => {
@@ -248,7 +250,15 @@ export default function AmendmentReport() {
           >
             Download PDF
           </Button>
-          <Avatar className="ml-6" src="/avatar.png" />
+           {user.profilePic.length > 0 ? (
+            <Avatar
+              alt="Travis Howard"
+              sx={{ fontSize: "large" }}
+              src={user.profilePic}
+            />
+          ) : (
+            <AccountCircleIcon fontSize="large" />
+          )}
         </div>
       </header>
 

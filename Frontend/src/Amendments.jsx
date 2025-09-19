@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import CircularProgress from "@mui/material/CircularProgress"; // Material-UI loader
+import Box from "@mui/material/Box"; // For centering
 
 const amendments = [
   {
@@ -55,24 +57,14 @@ export default function Amendments() {
   // const {amendments,setAmendments} = useState([])
 
   const [amendments, setAmendments] = useState([]);
-  const [verified,setVerified] = useState(JSON.parse(localStorage.getItem("savedResults")) || {})
-
-
-
-  useEffect(() => {
-  const updateVerified = () => {
-    const saved = JSON.parse(localStorage.getItem("savedResults")) || {};
-    setVerified(saved);
-  };
-
-  window.addEventListener("savedResultsUpdated", updateVerified);
-  updateVerified(); // run once immediately
-
-  return () => window.removeEventListener("savedResultsUpdated", updateVerified);
-}, []);
+  const [verified, setVerified] = useState(
+    JSON.parse(localStorage.getItem("savedResults")) || {}
+  );
+  const [loader, setLoader] = useState(false);
 
   const getAmends = async () => {
     try {
+      setLoader(true);
       const res = await fetch("http://localhost:3000/api/amend/getAmend"); // GET request
       const data = await res.json();
       if (res.status === 200) {
@@ -80,12 +72,87 @@ export default function Amendments() {
       }
     } catch (e) {
       toast.error("Error occurred: " + e.message);
+    } finally {
+      setLoader(false);
     }
   };
 
   useEffect(() => {
     getAmends();
   }, []);
+
+  const getMlResults = async (aId) => {
+    try {
+      const result = await fetch(
+        `http://localhost:3000/api/amend/${aId}/getMlResult`,
+        { method: "GET", headers: { "Content-Type": "application/json" } }
+      );
+      const data = await result.json();
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const downloadPDF = async (title, aId) => {
+    try {
+      const mlResult = await getMlResults(aId);
+      // console.log(mlResult); // <-- await here
+      if (!mlResult) {
+        console.error("No ML result available for PDF");
+        return;
+      }
+      // Derived values (null until data is ready)
+      const positive = mlResult?.mlData.sentiment_counts?.positive ?? null;
+      const negative = mlResult?.mlData.sentiment_counts?.negative ?? null;
+      const neutral = mlResult?.mlData.sentiment_counts?.neutral ?? null;
+      const total =
+        positive !== null && negative !== null && neutral !== null
+          ? positive + negative + neutral
+          : null;
+
+      const Pp = total ? ((positive / total) * 100).toFixed(2) : null;
+      const Np = total ? ((negative / total) * 100).toFixed(2) : null;
+      const Nup = total ? ((neutral / total) * 100).toFixed(2) : null;
+
+      const payload = {
+        amendmentId: aId,
+        amendmentTitle: title,
+        totalComments: mlResult.mlData.sentiment_counts?.total ?? 0,
+        counts: mlResult.mlData.sentiment_counts,
+        percentages: {
+          positive: Pp ?? 0,
+          negative: Np ?? 0,
+          neutral: Nup ?? 0,
+        },
+        keywords: mlResult.mlData.keywords ?? ["economy", "jobs", "growth"],
+        summaries: mlResult.mlData.summaries,
+      };
+
+      const res = await fetch("http://localhost:5000/generate-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Failed to generate PDF");
+
+      // Download the PDF
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${aId}_AmendmentReport.pdf`;
+      document.body.appendChild(a); // ensure in DOM
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      console.log("✅ PDF downloaded successfully!");
+    } catch (err) {
+      console.error("PDF download error:", err);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 font-inter">
@@ -162,79 +229,92 @@ export default function Amendments() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-200">
-                <thead className="bg-slate-100">
-                  <tr>
-                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-600 sm:pl-6">
-                      Amendment ID
-                    </th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-                      Title
-                    </th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-                      Status
-                    </th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
-                      Date Submitted
-                    </th>
-                    <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Action</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 bg-white">
-                  {amendments.map((item,index) => (
-                    <tr key={index} className="hover:bg-slate-50">
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-500 sm:pl-6">
-                        {item.aId}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-900">
-                        {item.title}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm">
-                        {item.mlData?.summaries?.neutral?.length===0?<span
-
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-200`}
-                        >
-                         Not Verified
-                        </span>:<span
-
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-200`}
-                        >
-                         Verified
-                        </span>}
-                        
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                        {item.mlData?.lastUpdated
-                          ? new Date(item.mlData.lastUpdated).toLocaleString() // readable date + time
-                          : "N/A"}
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a
-                          className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700"
-                          href="#"
-                        >
-                          <CommentUpload aId={item.aId} />
-
-                        </a>
-                      </td>
-                      {item.mlData?.summaries?.neutral?.length!==0&&<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a
-                          className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700"
-                          href="#"
-                        >
-                          <CommentUpload aId={item.aId} />
-
-                        </a>
-                      </td>}
-                      
+            {loader ? (
+              // Loader Section (centered)
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "300px", // adjust based on layout
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              // Table Section
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-slate-200">
+                  <thead className="bg-slate-100">
+                    <tr>
+                      <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-600 sm:pl-6">
+                        Amendment ID
+                      </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+                        Title
+                      </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+                        Status
+                      </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-slate-600">
+                        Date Submitted
+                      </th>
+                      <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                        <span className="sr-only">Action</span>
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200 bg-white">
+                    {amendments.map((item, index) => (
+                      <tr key={index} className="hover:bg-slate-50">
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-500 sm:pl-6">
+                          {item.aId}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-900">
+                          {item.title}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm">
+                          {item.mlData?.summaries?.neutral?.length === 0 ? (
+                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-200">
+                              Not Verified
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-200">
+                              Verified
+                            </span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                          {item.mlData?.lastUpdated
+                            ? new Date(item.mlData.lastUpdated).toLocaleString()
+                            : "N/A"}
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                          <a
+                            className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700"
+                            href="#"
+                          >
+                            <CommentUpload aId={item.aId} />
+                          </a>
+                        </td>
+                        {(item.mlData?.summaries?.neutral?.length > 0 ||
+                          item.mlData?.summaries?.positive?.length > 0 ||
+                          item.mlData?.summaries?.negative?.length > 0) && (
+                          <td>
+                            <button
+                              onClick={() => downloadPDF(item.title, item.aId)}
+                              className="inline-flex items-center gap-1.5 w-fit p-2 text-slate-600 bg-gray-100 rounded-lg"
+                            >
+                              See Pdf
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
             <nav
               aria-label="Pagination"

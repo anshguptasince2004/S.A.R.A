@@ -35,6 +35,7 @@ def generate_pdf():
         percentages = data.get("percentages", {})
         keywords = data.get("keywords", [])
         summaries = data.get("summaries", {})
+        
 
         file_path = generate_report_pdf(amendment_id, amendment_title, counts, percentages, keywords, summaries)
 

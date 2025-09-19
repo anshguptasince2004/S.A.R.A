@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Avatar } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Dashboard, Assessment, Settings } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
 // const comments = [
@@ -54,12 +56,21 @@ function Sidebar() {
 }
 
 function Header() {
+  const {user} = useSelector((state)=>state.auth)
   return (
     <header className="flex items-center justify-between h-16 px-10 header-bg border-b border-gray-200/50 shadow-sm  bg-white">
       <h1 className="text-xl font-semibold text-gray-900">
         Comments & AI Report
       </h1>
-      <Avatar src="/avatar.png" />
+       {user.profilePic.length > 0 ? (
+            <Avatar
+              alt="Travis Howard"
+              sx={{ fontSize: "large" }}
+              src={user.profilePic}
+            />
+          ) : (
+            <AccountCircleIcon fontSize="large" />
+          )}
     </header>
   );
 }
